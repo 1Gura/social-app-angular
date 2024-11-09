@@ -1,1 +1,28 @@
-<p>sign-up works!</p>
+<div class="sign-up flex flex-column">
+  <div class="sign-up-header">
+    <h1>Create a new account</h1>
+    <p>To use Connectify, Please enter your details.</p>
+  </div>
+  <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Name</label>
+      <input pInputText id="username" type="text" class="w-12rem" />
+    </div>
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Email</label>
+      <input pInputText id="email" type="text" class="w-12rem" />
+    </div>
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Password</label>
+      <input pInputText id="password" type="password" class="w-12rem" />
+    </div>
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Repeat Password</label>
+      <input pInputText id="repeat-password" type="password" class="w-12rem" />
+    </div>
+    <p-button label="Sign Up" icon="pi pi-user" styleClass="w-10rem mx-auto" />
+  </div>
+  <div class="w-full md:w-5 flex align-items-center justify-content-center py-5">
+    <span>Don't have an account?</span> <a href="">Log in</a>
+  </div>
+</div>
