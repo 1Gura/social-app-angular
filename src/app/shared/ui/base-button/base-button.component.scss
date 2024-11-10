@@ -1,6 +1,16 @@
 :host {
   display: block;
   width: 100%;
+
+
+}
+
+.background-gradient-color {
+  ::ng-deep {
+    .p-button {
+      background: var(--background-gradient);
+    }
+  }
 }
 
 .primary-background-color {
@@ -24,7 +34,7 @@
     .p-button {
       border: 1px solid #D0D5DD;
       color: #1F1F22;
-      background-color: var(--bg-color);
+      background-color: var(--white-color);
     }
   }
 }

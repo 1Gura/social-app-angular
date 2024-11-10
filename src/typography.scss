@@ -31,7 +31,7 @@ $font-weight-bold: 700;
 body {
   font-family: $font-family-base !important;
   font-weight: $font-weight-normal !important; /* или 700 для жирного текста */
-  color: var(--text-color); /* Использование цветовых переменных */
+  color: var(--second-text-color); /* Использование цветовых переменных */
 }
 
 
@@ -80,7 +80,7 @@ h2 {
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: var(--text-color);
+  color: var(--second-text-color);
   margin: 0;
 }
 

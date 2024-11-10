@@ -16,13 +16,14 @@
     height: 48px;
     width: 400px;
     border-radius: 8px;
-    background-color: var(--border-color);
+    background-color: var(--bg-color);
     outline: none;
-    color: var(--light-bg-color);
+    color: var(--second-text-color);
   }
 
   &__label {
     height: 22px;
     width: 100%;
+    color: var(--second-text-color);
   }
 }

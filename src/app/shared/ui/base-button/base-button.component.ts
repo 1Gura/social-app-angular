@@ -15,6 +15,6 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class BaseButtonComponent {
   @Input() buttonLabel = '';
-  @Input() buttonColor: ButtonBackgroundColors = ButtonBackgroundColors.primary;
+  @Input() buttonColor: ButtonBackgroundColors = ButtonBackgroundColors.gradient;
   @Input() iconPath = '';
 }
