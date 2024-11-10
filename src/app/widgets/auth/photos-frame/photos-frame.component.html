@@ -1,0 +1,5 @@
+<div class="photos-frame">
+  <div *ngFor="let photo of photos" [class.tall]="photo.isTall" [class.wide]="photo.isWide" class="photo-tile">
+    <img (load)="onImageLoad(photo, $event)" [alt]="photo.alt" [src]="photo.url" />
+  </div>
+</div>
