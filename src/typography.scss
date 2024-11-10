@@ -35,7 +35,6 @@ body {
 }
 
 
-
 // Заголовки
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-base;
@@ -114,7 +113,7 @@ p {
   font-size: $font-size-base;
   line-height: $line-height-base;
   margin: 0 0 1em;
-  color: var(--primary-text-color);  // Используем переменную цвета
+  color: var(--primary-text-color); // Используем переменную цвета
 }
 
 // Списки
