@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.primary-background-color {
+  ::ng-deep {
+    .p-button {
+      background-color: var(--primary-color);
+    }
+  }
+}
+
+.secondary-background-color {
+  ::ng-deep {
+    .p-button {
+      background-color: var(--secondary-color);
+    }
+  }
+}
+
+.none-background-color {
+  ::ng-deep {
+    .p-button {
+      border: 1px solid #D0D5DD;
+      color: #1F1F22;
+      background-color: var(--bg-color);
+    }
+  }
+}
+
+.base-button {
+  width: 100%;
+
+  p-button {
+    width: 100%;
+    flex-grow: 1;
+
+    ::ng-deep {
+      .p-button {
+        width: 100%;
+      }
+    }
+  }
+}

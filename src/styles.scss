@@ -6,6 +6,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  box-shadow: none;
 }
 
 /* Убираем внутренние отступы */
@@ -70,6 +71,16 @@ select {
   font: inherit;
 }
 
+input:focus {
+  outline: none;
+}
+
+/* Remove outline on the forms and links */
+:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -81,8 +92,9 @@ select {
 }
 
 @import 'primeng/resources/primeng.min.css';
-@import 'primeng/resources/themes/lara-light-indigo/theme.css';
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
 @import './typography.scss';
 @import './themes.scss';
+

@@ -1,0 +1,9 @@
+<div class="flex justify-content-center base-button">
+  <p-button [className]="buttonColor" [label]="buttonLabel">
+    @if (iconPath) {
+      <ng-template pTemplate="icon">
+        <img alt="icon" height="24" [ngSrc]="iconPath" width="24" />
+      </ng-template>
+    }
+  </p-button>
+</div>

@@ -1,0 +1,16 @@
+<div class="base-input flex justify-content-center">
+  <div class="flex flex-column base-input__gap">
+    <label [for]="uniqueId" class="base-input__label base-medium">{{ label }}</label>
+    <input
+      [(ngModel)]="value"
+      [id]="uniqueId"
+      aria-describedby="username-help"
+      class="base-input__text-field base-medium"
+      pInputText />
+
+    <!--    TODO Тут добавить проверку на коректную валидацию-->
+    <small *ngIf="false" id="username-help">
+      Enter your username to reset your password.
+    </small>
+  </div>
+</div>

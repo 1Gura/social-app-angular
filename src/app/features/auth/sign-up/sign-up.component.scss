@@ -3,3 +3,31 @@
   height: 100%;
   width: 100%;
 }
+
+input:focus {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
+.sign-up {
+  &__paragraph {
+    margin-top: 0.75rem;
+    color: var(--light-text-color);
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  &__button-group {
+    width: 100%;
+    height: 100%;
+    gap: 1.25rem;
+  }
+}

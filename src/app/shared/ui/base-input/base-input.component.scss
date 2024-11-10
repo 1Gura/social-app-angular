@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.p-component {
+
+}
+
+.base-input__gap {
+  gap: 0.75rem;
+}
+
+
+.base-input {
+  &__text-field {
+    height: 48px;
+    width: 400px;
+    border-radius: 8px;
+    background-color: var(--border-color);
+    outline: none;
+    color: var(--light-bg-color);
+  }
+
+  &__label {
+    height: 22px;
+    width: 100%;
+  }
+}
