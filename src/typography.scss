@@ -1,0 +1,152 @@
+// typography.scss
+
+/* src/styles/typography.scss */
+
+/* Можно добавить дополнительные начертания, если они у вас есть */
+
+/* src/styles/typography.scss */
+
+// Базовые шрифты и размеры
+$font-family-base: 'Roboto', sans-serif;
+$font-size-base: 14px;
+$line-height-base: 1.5;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+/* Подключение шрифта Roboto с локальными файлами */
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto/Roboto-Regular.ttf') format('truetype');
+  font-weight: $font-weight-normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto/Roboto-Bold.ttf') format('truetype');
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+body {
+  font-family: $font-family-base !important;
+  font-weight: $font-weight-normal !important; /* или 700 для жирного текста */
+  color: var(--text-color); /* Использование цветовых переменных */
+}
+
+
+
+// Заголовки
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-base;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+.heading-1-bold {
+  font-size: 36px;
+  font-weight: $font-weight-bold;
+  line-height: 50.4px;
+  letter-spacing: -1px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+}
+
+.heading-semi-bold {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 50.4px;
+  letter-spacing: -1px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.heading-2-bold {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -1px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+.heading-3-bold {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33.6px;
+  letter-spacing: -1px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+// Параграфы
+p {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  margin: 0 0 1em;
+  color: var(--primary-text-color);  // Используем переменную цвета
+}
+
+// Списки
+ul, ol {
+  margin: 0 0 1em 1.5em;
+  padding: 0;
+  line-height: $line-height-base;
+}
+
+ul li, ol li {
+  margin-bottom: 0.5em;
+}
+
+// Текстовые стили для ссылок
+a {
+  color: var(--button-bg-color); // Цвет ссылки
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Размеры текста
+.text-small {
+  font-size: 0.875rem;
+}
+
+.text-large {
+  font-size: 1.25rem;
+}
+
+.text-muted {
+  color: var(--secondary-text-color);
+}
