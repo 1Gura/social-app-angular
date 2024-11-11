@@ -16,7 +16,7 @@
                        [iconPath]="'assets/icons/icons8-google.svg'"></app-base-button>
     </div>
     <div class="w-full base-regular text-purple-600 flex align-items-center justify-content-center">
-      <span>Don't have an account?</span>&nbsp;<a class="text-purple-800" href="">Log in</a>
+      <span>Do have an account?</span>&nbsp;<a [routerLink]="['/auth', 'sign-in']" class="text-purple-800">Log in</a>
     </div>
   </div>
 </div>

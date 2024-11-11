@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
+.sign-in {
+  &__paragraph {
+    margin-top: 0.75rem;
+    color: var(--secondary-text-color);
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  &__button-group {
+    width: 100%;
+    height: 100%;
+    gap: 1.25rem;
+  }
+
+  &__logo {
+    width: fit-content;
+    margin: 0 auto 4.25rem;
+  }
+
+  &__img {
+    width: 30px;
+    height: 30px;
+  }
+}
