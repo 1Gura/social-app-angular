@@ -1,0 +1,32 @@
+<div class="sign-up flex flex-column">
+  <div class="sign-up__header flex flex-column align-items-center">
+    <h1 class="heading-2-bold">Create a new account</h1>
+    <p class="sign-up__paragraph base-regular">To use Connectify, Please enter your details.</p>
+  </div>
+  <div class="w-full mt-5 flex flex-column align-items-center justify-content-center gap-5">
+    <form (ngSubmit)="onSubmit()" [formGroup]="signUpFormGroup">
+      <div class="sign-up__inputs gap-1">
+        <app-base-input [errorMessage]="'Enter correct Name, min 2 symbols.'" [formGroup]="signUpFormGroup"
+                        [formInputName]="'name'"
+                        [label]="'Name'"></app-base-input>
+        <app-base-input [errorMessage]="'Enter correct Email.'" [formGroup]="signUpFormGroup" [formInputName]="'email'"
+                        [label]="'Email'"></app-base-input>
+        <app-base-input [errorMessage]="'Enter correct password.'" [formGroup]="signUpFormGroup"
+                        [formInputName]="'password'"
+                        [label]="'Password'"></app-base-input>
+        <app-base-input [errorMessage]="'Enter correct password.'" [formGroup]="signUpFormGroup"
+                        [formInputName]="'confirmPassword'"
+                        [label]="'Repeat Password'"></app-base-input>
+      </div>
+      <div class="sign-up__button-group mt-4 flex flex-column align-items-center justify-content-center">
+        <app-base-button [buttonLabel]="'Sign Up'"></app-base-button>
+        <app-base-button [buttonColor]="noneButtonColor" [buttonLabel]="'Sign up with Google'"
+                         [iconPath]="'assets/icons/icons8-google.svg'"></app-base-button>
+      </div>
+    </form>
+
+    <div class="w-full base-regular text-purple-600 flex align-items-center justify-content-center">
+      <span>Do have an account?</span>&nbsp;<a [routerLink]="['/auth', 'sign-in']" class="text-purple-800">Log in</a>
+    </div>
+  </div>
+</div>

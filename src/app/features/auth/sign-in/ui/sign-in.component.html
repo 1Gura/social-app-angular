@@ -1,0 +1,33 @@
+<div class="sign-in flex flex-column">
+  <div class="sign-in__logo flex justify-content-between align-items-center gap-2">
+    <img [ngSrc]="'assets/icons/logo.svg'" alt="icon" class="sign-in__img" height="30" width="30" />
+    <h1 class="heading-1-bold ">Connectify</h1>
+  </div>
+  <div class="sign-in__header flex flex-column align-items-center">
+    <h1 class="heading-2-bold">Log in to your account</h1>
+    <p class="sign-in__paragraph base-regular">Welcome back! Please enter your details.</p>
+  </div>
+  <div class="w-full mt-5 flex flex-column align-items-center justify-content-center gap-5">
+    <form (ngSubmit)="onSubmit()" [formGroup]="signInFormGroup">
+      <div class="sign-in__inputs gap-1">
+        <app-base-input [errorMessage]="'Enter correct email.'" [formGroup]="signInFormGroup" [formInputName]="'email'"
+                        [label]="'Email'"
+        ></app-base-input>
+        <app-base-input [errorMessage]="'Enter correct password.'" [formGroup]="signInFormGroup"
+                        [formInputName]="'password'"
+                        [label]="'Password'"></app-base-input>
+      </div>
+
+      <div class="sign-in__button-group mt-4 flex flex-column align-items-center justify-content-center">
+        <app-base-button [buttonLabel]="'Sign Up'"></app-base-button>
+        <app-base-button [buttonColor]="noneButtonColor" [buttonLabel]="'Sign up with Google'"
+                         [iconPath]="'assets/icons/icons8-google.svg'"></app-base-button>
+      </div>
+    </form>
+
+    <div class="w-full base-regular text-purple-600 flex align-items-center justify-content-center">
+      <span>Don't have an account?</span>&nbsp;<a [routerLink]="['/auth', 'sign-up']" class="text-purple-800">Sign
+      up</a>
+    </div>
+  </div>
+</div>

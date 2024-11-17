@@ -17,4 +17,5 @@ export class BaseButtonComponent {
   @Input() buttonLabel = '';
   @Input() buttonColor: ButtonBackgroundColors = ButtonBackgroundColors.gradient;
   @Input() iconPath = '';
+  @Input() isSubmit = false;
 }

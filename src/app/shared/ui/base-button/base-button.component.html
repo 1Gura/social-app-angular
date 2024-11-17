@@ -1,5 +1,5 @@
 <div class="flex justify-content-center base-button">
-  <p-button [className]="buttonColor" [label]="buttonLabel">
+  <p-button [className]="buttonColor" [label]="buttonLabel" [type]="isSubmit ? 'submit' : ''">
     @if (iconPath) {
       <ng-template pTemplate="icon">
         <img alt="icon" height="24" [ngSrc]="iconPath" width="24" />

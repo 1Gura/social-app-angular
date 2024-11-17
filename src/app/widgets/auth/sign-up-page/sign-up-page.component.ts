@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SignUpComponent } from '../../../features/auth/sign-up/sign-up.component';
+import { SignUpComponent } from '../../../features/auth/sign-up/ui/sign-up.component';
 
 @Component({
   selector: 'app-sign-up-page',

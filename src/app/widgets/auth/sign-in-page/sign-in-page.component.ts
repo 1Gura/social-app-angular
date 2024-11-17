@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SignInComponent } from '../../../features/auth/sign-in/sign-in.component';
+import { SignInComponent } from '../../../features/auth/sign-in/ui/sign-in.component';
 
 @Component({
   selector: 'app-sign-in-page',
