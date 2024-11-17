@@ -20,11 +20,13 @@ import { ValidationService } from '../../../../entities/lib/user/validation/vali
 })
 export class SignUpComponent {
   noneButtonColor = ButtonBackgroundColors.none;
+  formLoading = false;
   private formBuilder = inject(FormBuilder);
   private validationService = inject(ValidationService);
   signUpFormGroup = SignUpValidationService.createForm(this.formBuilder, this.validationService);
 
   onSubmit(): void {
+    this.formLoading = true;
     if (this.signUpFormGroup.invalid) {
       this.signUpFormGroup.markAllAsTouched();
 

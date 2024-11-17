@@ -23,6 +23,7 @@ import { SignInValidationService } from '../model/sign-in-validation.service';
 })
 export class SignInComponent {
   noneButtonColor = ButtonBackgroundColors.none;
+  formLoading = false;
   private formBuilder = inject(FormBuilder);
   signInFormGroup = SignInValidationService.createForm(this.formBuilder);
 
@@ -30,6 +31,7 @@ export class SignInComponent {
   }
 
   onSubmit(): void {
+    this.formLoading = true;
     if (this.signInFormGroup.invalid) {
       this.signInFormGroup.markAllAsTouched();
 

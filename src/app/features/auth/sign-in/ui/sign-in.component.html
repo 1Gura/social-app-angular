@@ -19,15 +19,16 @@
       </div>
 
       <div class="sign-in__button-group mt-4 flex flex-column align-items-center justify-content-center">
-        <app-base-button [buttonLabel]="'Sign Up'"></app-base-button>
-        <app-base-button [buttonColor]="noneButtonColor" [buttonLabel]="'Sign up with Google'"
+        <app-base-button [buttonLabel]="formLoading ? 'Sign In...' : 'Sign In'"
+                         [loading]="formLoading"></app-base-button>
+        <app-base-button [buttonColor]="noneButtonColor" [buttonLabel]="'Sign in with Google'"
                          [iconPath]="'assets/icons/icons8-google.svg'"></app-base-button>
       </div>
     </form>
 
     <div class="w-full base-regular text-purple-600 flex align-items-center justify-content-center">
       <span>Don't have an account?</span>&nbsp;<a [routerLink]="['/auth', 'sign-up']" class="text-purple-800">Sign
-      up</a>
+      in</a>
     </div>
   </div>
 </div>
