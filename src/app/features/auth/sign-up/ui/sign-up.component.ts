@@ -11,6 +11,7 @@ import { SignUpValidationService } from '../model/sign-up-validation.service';
 import { ValidationService } from '../../../../entities/lib/user/validation/validation.service';
 import { UserService } from '../../../../entities/lib/api/users/users.service';
 import { take } from 'rxjs';
+import { AuthService } from '../../../../shared/api/auth/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,7 +19,7 @@ import { take } from 'rxjs';
   imports: [DividerModule, ButtonModule, InputTextModule, BaseInputComponent, BaseButtonComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
-  providers: [UserService],
+  providers: [UserService, AuthService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
@@ -27,7 +28,7 @@ export class SignUpComponent {
   private formBuilder = inject(FormBuilder);
   private validationService = inject(ValidationService);
   signUpFormGroup = SignUpValidationService.createForm(this.formBuilder, this.validationService);
-  private userService = inject(UserService);
+  private readonly authService = inject(AuthService);
 
 
   onSubmit(): void {
@@ -37,14 +38,11 @@ export class SignUpComponent {
     }
 
     if (this.signUpFormGroup.valid) {
-      debugger
-      this.userService.createUserAccount({
+      this.authService.register({
         username: this.signUpFormGroup.value.name ?? '',
         password: this.signUpFormGroup.value.password ?? '',
-      }).pipe(take(1)).subscribe(value => {
-        debugger
-        console.log(value);
-      });
+        email: this.signUpFormGroup.value.email ?? '',
+      }).pipe(take(1)).subscribe();
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
-import { CreateUserDto, User } from '../../../../shared/api/auth.types';
+import { CreateUserDto, User } from '../../../../shared/api/user/user.types';
 import { ENDPOINTS } from '../../../../shared/api/endpoints';
 
 @Injectable({

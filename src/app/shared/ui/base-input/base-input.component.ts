@@ -16,6 +16,7 @@ export class BaseInputComponent {
   @Input() formGroup!: FormGroup;
   @Input() formInputName = '';
   @Input() errorMessage = '';
+  @Input() type = 'text'
 
   readonly uniqueId = `input-${uuidv4()}`;
 
