@@ -3,9 +3,11 @@ import { BaseButtonComponent } from '../../../../shared/ui/base-button/base-butt
 import { BaseInputComponent } from '../../../../shared/ui/base-input/base-input.component';
 import { ButtonBackgroundColors } from '../../../../shared/ui/base-button/button-background-colors';
 import { RouterLink } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignInValidationService } from '../model/sign-in-validation.service';
+import { BehaviorSubject, take, tap } from 'rxjs';
+import { AuthService } from '../../../../shared/api/auth/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,22 +18,23 @@ import { SignInValidationService } from '../model/sign-in-validation.service';
     RouterLink,
     NgOptimizedImage,
     ReactiveFormsModule,
+    AsyncPipe,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
+  providers: [AuthService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
   noneButtonColor = ButtonBackgroundColors.none;
-  formLoading = false;
+  formLoading$ = new BehaviorSubject<boolean>(false);
   private formBuilder = inject(FormBuilder);
   signInFormGroup = SignInValidationService.createForm(this.formBuilder);
 
-  constructor() {
-  }
+  private readonly authService = inject(AuthService);
 
   onSubmit(): void {
-    this.formLoading = true;
+    this.formLoading$.next(true);
     if (this.signInFormGroup.invalid) {
       this.signInFormGroup.markAllAsTouched();
 
@@ -39,7 +42,14 @@ export class SignInComponent {
     }
 
     if (this.signInFormGroup.valid) {
-      // TODO valid
+      // TODO убрать username из
+      this.authService.login({
+        username: '',
+        password: this.signInFormGroup.value.password ?? '',
+        email: this.signInFormGroup.value.email ?? '',
+      }).pipe(tap(() => {
+        this.formLoading$.next(false);
+      }), take(1)).subscribe();
     }
   }
 }

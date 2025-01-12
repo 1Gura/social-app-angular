@@ -9,22 +9,22 @@ import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignUpValidationService } from '../model/sign-up-validation.service';
 import { ValidationService } from '../../../../entities/lib/user/validation/validation.service';
-import { UserService } from '../../../../entities/lib/api/users/users.service';
-import { take } from 'rxjs';
+import { BehaviorSubject, take, tap } from 'rxjs';
 import { AuthService } from '../../../../shared/api/auth/auth.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [DividerModule, ButtonModule, InputTextModule, BaseInputComponent, BaseButtonComponent, RouterLink, ReactiveFormsModule],
+  imports: [DividerModule, ButtonModule, InputTextModule, BaseInputComponent, BaseButtonComponent, RouterLink, ReactiveFormsModule, AsyncPipe],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
-  providers: [UserService, AuthService],
+  providers: [AuthService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
   noneButtonColor = ButtonBackgroundColors.none;
-  formLoading = false;
+  formLoading$ = new BehaviorSubject<boolean>(false);
   private formBuilder = inject(FormBuilder);
   private validationService = inject(ValidationService);
   signUpFormGroup = SignUpValidationService.createForm(this.formBuilder, this.validationService);
@@ -32,9 +32,11 @@ export class SignUpComponent {
 
 
   onSubmit(): void {
-    this.formLoading = true;
+    this.formLoading$.next(true);
     if (this.signUpFormGroup.invalid) {
       this.signUpFormGroup.markAllAsTouched();
+
+      return;
     }
 
     if (this.signUpFormGroup.valid) {
@@ -42,7 +44,9 @@ export class SignUpComponent {
         username: this.signUpFormGroup.value.name ?? '',
         password: this.signUpFormGroup.value.password ?? '',
         email: this.signUpFormGroup.value.email ?? '',
-      }).pipe(take(1)).subscribe();
+      }).pipe(tap(() => {
+        this.formLoading$.next(false);
+      }), take(1)).subscribe();
     }
   }
 }
