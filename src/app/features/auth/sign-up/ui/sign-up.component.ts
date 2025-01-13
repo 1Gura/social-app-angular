@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignUpValidationService } from '../model/sign-up-validation.service';
 import { ValidationService } from '../../../../entities/lib/user/validation/validation.service';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { BehaviorSubject, finalize, take } from 'rxjs';
 import { AuthService } from '../../../../shared/api/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
 
@@ -35,6 +35,7 @@ export class SignUpComponent {
     this.formLoading$.next(true);
     if (this.signUpFormGroup.invalid) {
       this.signUpFormGroup.markAllAsTouched();
+      this.formLoading$.next(false);
 
       return;
     }
@@ -44,7 +45,7 @@ export class SignUpComponent {
         username: this.signUpFormGroup.value.name ?? '',
         password: this.signUpFormGroup.value.password ?? '',
         email: this.signUpFormGroup.value.email ?? '',
-      }).pipe(tap(() => {
+      }).pipe(finalize(() => {
         this.formLoading$.next(false);
       }), take(1)).subscribe();
     }

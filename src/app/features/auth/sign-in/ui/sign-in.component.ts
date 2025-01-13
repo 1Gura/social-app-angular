@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignInValidationService } from '../model/sign-in-validation.service';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { BehaviorSubject, finalize, take } from 'rxjs';
 import { AuthService } from '../../../../shared/api/auth/auth.service';
 
 @Component({
@@ -37,17 +37,18 @@ export class SignInComponent {
     this.formLoading$.next(true);
     if (this.signInFormGroup.invalid) {
       this.signInFormGroup.markAllAsTouched();
+      this.formLoading$.next(false);
 
       return;
     }
 
     if (this.signInFormGroup.valid) {
-      // TODO убрать username из
+      // TODO убрать username из модели
       this.authService.login({
         username: '',
         password: this.signInFormGroup.value.password ?? '',
         email: this.signInFormGroup.value.email ?? '',
-      }).pipe(tap(() => {
+      }).pipe(finalize(() => {
         this.formLoading$.next(false);
       }), take(1)).subscribe();
     }

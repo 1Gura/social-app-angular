@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ENDPOINTS } from '../endpoints';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   LoginRequest,
   LoginResponse,
@@ -9,9 +9,10 @@ import {
   RegisterRequest,
   RegisterResponse,
 } from './auth.types';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../storage/local-storage.service';
 import { LOCAL_STORAGE_KEYS } from '../../storage/local-storage-keys';
+import { NotificationService } from '../../service-helper/notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,11 @@ import { LOCAL_STORAGE_KEYS } from '../../storage/local-storage-keys';
 export class AuthService {
   private readonly API_URL = ENDPOINTS.authEndpoint; // Базовый URL для авторизации
 
-  constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly localStorageService: LocalStorageService,
+    private readonly notificationService: NotificationService
+  ) {
   }
 
   /**
@@ -27,9 +32,13 @@ export class AuthService {
    * @param payload { email, password }
    * @returns Observable<AuthResponse>
    */
-  login(payload: LoginRequest): Observable<LoginResponse> {
+  login(payload: LoginRequest): Observable<LoginResponse | null> {
     return this.http.post<LoginResponse>(`${this.API_URL}/login`, payload).pipe(tap((registerResponse) => {
       this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, registerResponse.accessToken);
+    }), catchError((error: HttpErrorResponse) => {
+      this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status)
+
+      return of(null)
     }));
   }
 
@@ -38,10 +47,14 @@ export class AuthService {
    * @param payload { email, password }
    * @returns Observable<AuthResponse>
    */
-  register(payload: RegisterRequest): Observable<RegisterResponse> {
+  register(payload: RegisterRequest): Observable<RegisterResponse | null> {
     return this.http.post<RegisterResponse>(`${this.API_URL}/register`, payload)
       .pipe(tap((registerResponse) => {
         this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, registerResponse.accessToken);
+      }), catchError((error: HttpErrorResponse) => {
+        this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status)
+
+        return of(null)
       }));
   }
 

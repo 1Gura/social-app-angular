@@ -1,0 +1,19 @@
+<div class="notification-container">
+  <div
+    *ngFor="let notification of notifications$ | async"
+    class="notification {{ notification.status }}"
+    [ngClass]="{'fade-out': notification.isFadingOut}"
+  >
+    <div class="icon">
+      <span *ngIf="notification.status === 'success'">✔️</span>
+      <span *ngIf="notification.status === 'error'">❌</span>
+      <span *ngIf="notification.status === 'info'">ℹ️</span>
+      <span *ngIf="notification.status === 'warning'">⚠️</span>
+    </div>
+    <div class="content">
+      <div class="title">{{ notification.title }}</div>
+      <div class="message">{{ notification.message }}</div>
+    </div>
+    <button class="close-button" (click)="removeNotification(notification.id)">×</button>
+  </div>
+</div>
