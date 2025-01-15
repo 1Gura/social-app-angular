@@ -1,4 +1,5 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -6,7 +7,12 @@ export const routes: Routes = [
       import('./pages/home-page/home-page.component').then(
         (m) => m.HomePageComponent
       ),
-    canActivate: []
+    canActivate: [authGuard],
+  },
+  {
+    path: 'feed',
+    loadComponent: () => import('./pages/feed/feed.component').then((m) => m.FeedComponent),
+    canActivate: [authGuard]
   },
   {
     path: 'auth',
@@ -29,7 +35,9 @@ export const routes: Routes = [
             (m) => m.SignUpPageComponent
           )
       },
-    ]
+    ],
+    canActivate: [authGuard]
+
   },
   {path: '**', redirectTo: 'auth', pathMatch: 'full'}
 ];

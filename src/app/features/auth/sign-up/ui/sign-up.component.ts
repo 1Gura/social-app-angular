@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { BaseInputComponent } from '../../../../shared/ui/base-input/base-input.component';
 import { BaseButtonComponent } from '../../../../shared/ui/base-button/base-button.component';
 import { ButtonBackgroundColors } from '../../../../shared/ui/base-button/button-background-colors';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignUpValidationService } from '../model/sign-up-validation.service';
 import { ValidationService } from '../../../../entities/lib/user/validation/validation.service';
@@ -29,7 +29,7 @@ export class SignUpComponent {
   private validationService = inject(ValidationService);
   signUpFormGroup = SignUpValidationService.createForm(this.formBuilder, this.validationService);
   private readonly authService = inject(AuthService);
-
+  private readonly activatedRoute = inject(Router);
 
   onSubmit(): void {
     this.formLoading$.next(true);
@@ -47,6 +47,7 @@ export class SignUpComponent {
         email: this.signUpFormGroup.value.email ?? '',
       }).pipe(finalize(() => {
         this.formLoading$.next(false);
+        this.activatedRoute.navigate(['feed'])
       }), take(1)).subscribe();
     }
   }

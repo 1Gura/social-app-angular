@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ENDPOINTS } from '../endpoints';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
@@ -20,12 +20,9 @@ import { NotificationService } from '../../service-helper/notification/notificat
 export class AuthService {
   private readonly API_URL = ENDPOINTS.authEndpoint; // Базовый URL для авторизации
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly localStorageService: LocalStorageService,
-    private readonly notificationService: NotificationService
-  ) {
-  }
+  private readonly http = inject(HttpClient);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly notificationService = inject(NotificationService)
 
   /**
    * Выполняет вход пользователя
@@ -80,5 +77,10 @@ export class AuthService {
         this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.accessToken);
       })
     );
+  }
+
+  isAuthenticated(): boolean {
+    // Пример: проверяем наличие токена в LocalStorage
+    return !!localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
   }
 }

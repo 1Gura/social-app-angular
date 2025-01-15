@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BaseButtonComponent } from '../../../../shared/ui/base-button/base-button.component';
 import { BaseInputComponent } from '../../../../shared/ui/base-input/base-input.component';
 import { ButtonBackgroundColors } from '../../../../shared/ui/base-button/button-background-colors';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignInValidationService } from '../model/sign-in-validation.service';
@@ -32,6 +32,7 @@ export class SignInComponent {
   signInFormGroup = SignInValidationService.createForm(this.formBuilder);
 
   private readonly authService = inject(AuthService);
+  private readonly activatedRoute = inject(Router);
 
   onSubmit(): void {
     this.formLoading$.next(true);
@@ -50,6 +51,7 @@ export class SignInComponent {
         email: this.signInFormGroup.value.email ?? '',
       }).pipe(finalize(() => {
         this.formLoading$.next(false);
+        this.activatedRoute.navigate(['feed'])
       }), take(1)).subscribe();
     }
   }
