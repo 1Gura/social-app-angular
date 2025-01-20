@@ -6,23 +6,37 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
   constructor() {}
 
+  get isLocalStorageAvailable(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
   // Метод для получения значения
   getItem(key: string): string | null {
-    return localStorage.getItem(key);
+    if(this.isLocalStorageAvailable) {
+      return localStorage.getItem(key);
+    }
+    return null;
   }
 
   // Метод для сохранения значения
   setItem(key: string, value: string): void {
-    localStorage.setItem(key, value);
+    if(this.isLocalStorageAvailable) {
+      localStorage.setItem(key, value);
+    }
   }
 
   // Метод для удаления значения
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    if(this.isLocalStorageAvailable) {
+
+      localStorage.removeItem(key);
+    }
   }
 
   // Метод для очистки всего хранилища
   clear(): void {
-    localStorage.clear();
+    if(this.isLocalStorageAvailable) {
+      localStorage.clear();
+    }
   }
 }
