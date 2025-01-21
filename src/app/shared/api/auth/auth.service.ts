@@ -34,9 +34,9 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.API_URL}/login`, payload).pipe(tap((registerResponse) => {
       this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, registerResponse.accessToken);
     }), catchError((error: HttpErrorResponse) => {
-      this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status)
+      this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status);
 
-      return of(null)
+      return of(null);
     }));
   }
 
@@ -50,9 +50,9 @@ export class AuthService {
       .pipe(tap((registerResponse) => {
         this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, registerResponse.accessToken);
       }), catchError((error: HttpErrorResponse) => {
-        this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status)
+        this.notificationService.showNotificationFromHttpCode(error.error.error, error.error.message, error.status);
 
-        return of(null)
+        return of(null);
       }));
   }
 
@@ -62,25 +62,26 @@ export class AuthService {
    */
   logout(payload: LogoutRequest): Observable<LogoutResponse> {
     // TODO тут неправильно, нужно передавать refreshToken, а не access.
-    return this.http.post<LogoutResponse>(`${this.API_URL}/logout`, payload).pipe(tap(()=>{
+    return this.http.post<LogoutResponse>(`${this.API_URL}/logout`, payload).pipe(tap(() => {
       this.localStorageService.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
       this.localStorageService.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN);
     }));
   }
 
-  checkToken$(): Observable<boolean> {
+  checkRefreshToken$(): Observable<boolean> {
     return this.http.post<CheckTokenResponse>(`${this.API_URL}/checkrefreshtoken`, {}).pipe(
       map((response: CheckTokenResponse) => response.valid),
       catchError((err) => {
         console.log(err);
-        this.logout({token: this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '' });
+        this.logout({ token: this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '' });
         return of(false);
-      })
+      }),
     );
   }
 
-  isAuthenticated$(): Observable<boolean> {
+  checkAccessToken$(): Observable<boolean> {
     // Пример: проверяем наличие токена в LocalStorage
-    return this.checkToken$()
+    return this.http.get<{ isAuthenticated: boolean }>(`${this.API_URL}/check`)
+      .pipe(map(response => response.isAuthenticated));
   }
 }
