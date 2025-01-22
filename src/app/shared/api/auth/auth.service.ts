@@ -2,11 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { ENDPOINTS } from '../endpoints';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
-  CheckTokenResponse,
   LoginRequest,
   LoginResponse,
   LogoutRequest,
   LogoutResponse,
+  RefreshTokenResponse,
   RegisterRequest,
   RegisterResponse,
 } from './auth.types';
@@ -68,13 +68,11 @@ export class AuthService {
     }));
   }
 
-  checkRefreshToken$(): Observable<boolean> {
-    return this.http.post<CheckTokenResponse>(`${this.API_URL}/checkrefreshtoken`, {}).pipe(
-      map((response: CheckTokenResponse) => response.valid),
-      catchError((err) => {
-        console.log(err);
+  refreshToken$(): Observable<RefreshTokenResponse> {
+    return this.http.post<RefreshTokenResponse>(`${this.API_URL}/refresh-token`, {}).pipe(
+      catchError((error: HttpErrorResponse) => {
         this.logout({ token: this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '' });
-        return of(false);
+        return of({valid: false, message: error.message, accessToken: ''});
       }),
     );
   }
