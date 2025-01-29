@@ -2,61 +2,77 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { LocalStorageService } from '../storage/local-storage.service'; // Путь к вашему сервису
 import { LOCAL_STORAGE_KEYS } from '../storage/local-storage-keys';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../api/auth/auth.service';
-import { RefreshTokenResponse } from '../api/auth/auth.types'; // Путь к ключам локального хранилища
+import { RefreshTokenResponse } from '../api/auth/auth.types';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+
   constructor(private localStorageService: LocalStorageService, private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const accessToken = this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
 
-    // Добавляем токен в заголовок Authorization, если он существует
+    if (req.url.includes('/refresh-token')) {
+      return next.handle(req);
+    }
+
     const authReq = accessToken
-      ? req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      ? req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } })
       : req;
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
+        debugger
         if (error.status === 401) {
-          // Если получили 401 ошибку, пробуем обновить токен
-          //  TODO При добавление этого кода блочится странциа
-          // return this.handle401Error(authReq, next);
+          return this.handle401Error(authReq, next);
         }
         return throwError(() => error);
       })
     );
   }
 
-  private handle401Error(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ) {
-    return this.authService.refreshToken$().pipe(
-      switchMap((refreshTokenResponse: RefreshTokenResponse) => {
-        // Сохраняем новый accessToken в localStorage
-        this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, refreshTokenResponse.accessToken);
+  private handle401Error(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
 
-        // Повторяем исходный запрос с новым токеном
-        const newAuthReq = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${refreshTokenResponse.accessToken}`,
-          },
-        });
+      return this.authService.refreshToken$().pipe(
+        switchMap((refreshTokenResponse: RefreshTokenResponse) => {
+          debugger
+          this.isRefreshing = false;
+          this.refreshTokenSubject.next(refreshTokenResponse.accessToken);
+          this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, refreshTokenResponse.accessToken);
 
-        return next.handle(newAuthReq);
-      }),
-      catchError((refreshError) => {
-        // Если обновить токен не удалось, делаем логаут или перенаправление
-        this.authService.logout({token: ''});
-        return throwError(() => refreshError);
-      })
-    );
+          const newAuthReq = req.clone({
+            setHeaders: { Authorization: `Bearer ${refreshTokenResponse.accessToken}` },
+          });
+
+          return next.handle(newAuthReq);
+        }),
+        catchError((refreshError) => {
+          debugger
+          this.isRefreshing = false;
+          this.authService.logout({ token: '' });
+          return throwError(() => refreshError);
+        })
+      );
+    } else {
+      return this.refreshTokenSubject.pipe(
+        switchMap((token) => {
+          if (token) {
+            const newAuthReq = req.clone({
+              setHeaders: { Authorization: `Bearer ${token}` },
+            });
+            return next.handle(newAuthReq);
+          } else {
+            return throwError(() => new Error('Ошибка обновления токена'));
+          }
+        })
+      );
+    }
   }
 }
