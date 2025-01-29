@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
-import { CreateUserDto, User } from '../../../../shared/api/user/user.types';
+import { CreateUserDto, User, Users } from '../../../../shared/api/user/user.types';
 import { ENDPOINTS } from '../../../../shared/api/endpoints';
 
 @Injectable({
@@ -11,6 +11,12 @@ export class UserService {
   private readonly baseUrl = ENDPOINTS.usersEndpoint;
 
   constructor(private http: HttpClient) {
+  }
+
+  getUsers(): Observable<Users> {
+    return this.http.get<Users>(`${this.baseUrl}`).pipe(catchError((err) => {
+      throw new Error(err);
+    }));
   }
 
   getUserById(userId: string): Observable<User> {

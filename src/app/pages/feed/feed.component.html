@@ -1,1 +1,9 @@
 <p>feed works!</p>
+<div *ngIf="loading$ | async">Загрузка...</div>
+<div *ngIf="error$ | async as error">Ошибка: {{ error }}</div>
+
+<ul *ngIf="users$ | async as users">
+  <li *ngFor="let user of users">{{ user.username }}</li>
+</ul>
+
+<button (click)="handleFetchUsers()">Обновить</button>

@@ -8,11 +8,15 @@ import { AuthService } from './shared/api/auth/auth.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule, NotifictaionComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HttpClientModule,
+    NotifictaionComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class AppComponent {
   title = 'angular-social-app';
