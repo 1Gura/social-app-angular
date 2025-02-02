@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { LocalStorageService } from '../storage/local-storage.service'; // Путь к вашему сервису
-import { LOCAL_STORAGE_KEYS } from '../storage/local-storage-keys';
+import { LocalStorageService } from '../local-storage/local-storage.service'; // Путь к вашему сервису
+import { LOCAL_STORAGE_KEYS } from '../local-storage/local-storage-keys';
 import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../api/auth/auth.service';
 import { RefreshTokenResponse } from '../api/auth/auth.types';

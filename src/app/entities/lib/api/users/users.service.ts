@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { CreateUserDto, User, Users } from '../../../../shared/api/user/user.types';
 import { ENDPOINTS } from '../../../../shared/api/endpoints';
@@ -14,8 +14,8 @@ export class UserService {
   }
 
   getUsers(): Observable<Users> {
-    return this.http.get<Users>(`${this.baseUrl}`).pipe(catchError((err) => {
-      throw new Error(err);
+    return this.http.get<Users>(`${this.baseUrl}`).pipe(catchError((err: HttpErrorResponse) => {
+      throw new Error(err.message);
     }));
   }
 
@@ -24,6 +24,16 @@ export class UserService {
       throw new Error(err);
     }));
   }
+
+  getUserByEmail(email: string): Observable<User> {
+    const params = new HttpParams()
+      .set('email', email)
+
+    return this.http.get<User>(`${this.baseUrl}`, {params}).pipe(catchError((err) => {
+      throw new Error(err);
+    }));
+  }
+
 
   updateUser(userId: string, userData: Partial<User>): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/${userId}`, userData).pipe(catchError((err) => {

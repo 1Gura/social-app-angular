@@ -11,8 +11,8 @@ import {
   RegisterResponse,
 } from './auth.types';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { LocalStorageService } from '../../storage/local-storage.service';
-import { LOCAL_STORAGE_KEYS } from '../../storage/local-storage-keys';
+import { LocalStorageService } from '../../local-storage/local-storage.service';
+import { LOCAL_STORAGE_KEYS } from '../../local-storage/local-storage-keys';
 import { NotificationService } from '../../service-helper/notification/notification.service';
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../entities/lib/api/users/users.service';
-import { UsersStore } from '../../store/users.store';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectError, selectLoading, selectUsers } from '../../shared/store/user/user.selectors';
 
 @Component({
   selector: 'app-feed',
@@ -12,23 +12,25 @@ import { tap } from 'rxjs';
     NgIf,
     NgForOf,
   ],
-  providers:[UserService, UsersStore],
+  providers: [
+    UserService,
+  ],
   templateUrl: './feed.component.html',
-  styleUrl: './feed.component.scss'
+  styleUrl: './feed.component.scss',
 })
 export class FeedComponent implements OnInit {
-  users$ = this.usersStore.users$.pipe(tap(users => {
-    console.log(users);
-    debugger
-  }));
-  loading$ = this.usersStore.loading$;
-  error$ = this.usersStore.error$;
+  users$ = this.store.select(selectUsers);
+  loading$ = this.store.select(selectLoading);
+  error$ = this.store.select(selectError);
 
-  constructor(private usersStore: UsersStore) {}
-
-  public handleFetchUsers = this.usersStore.fetchUsers;
+  constructor(private store: Store) {
+  }
 
   ngOnInit() {
-    this.usersStore.fetchUsers(); // Загружаем пользователей при инициализации
+    this.fetchUsers();
+  }
+
+  fetchUsers() {
+    // this.store.dispatch(loadUserById());
   }
 }

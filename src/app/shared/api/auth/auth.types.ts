@@ -27,7 +27,7 @@ export interface LoginResponse {
   success: boolean;
   /** Сообщение об ошибке или успехе */
   message: string;
-  user: UserInfoRequest | undefined;
+  user: UserInfoResponse | undefined;
 }
 
 /** Сообщение для регистрации нового пользователя */

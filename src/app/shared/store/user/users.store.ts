@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { UserService } from '../entities/lib/api/users/users.service';
-import { User } from '../shared/api/user/user.types';
+import { UserService } from '../../../entities/lib/api/users/users.service';
+import { User } from '../../api/user/user.types';
 
 export interface UsersState {
   users: User[];
