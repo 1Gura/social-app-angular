@@ -69,12 +69,10 @@ export class AuthService {
   }
 
   refreshToken$(): Observable<RefreshTokenResponse> {
-    debugger
     return this.http.post<RefreshTokenResponse>(`${this.API_URL}/refresh-token`, {}, { withCredentials: true }).pipe(
       catchError((error: HttpErrorResponse) => {
-        debugger
         this.logout({ token: this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '' });
-        return of({valid: false, message: error.message, accessToken: ''});
+        return of({valid: false, message: error.message, accessToken: '', refreshToken: ''});
       }),
     );
   }

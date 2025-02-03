@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { login, loginFailure, loginSuccess } from './auth.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 import { AuthService } from '../../api/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions, private authService: AuthService) {
+  constructor(private actions$: Actions, private authService: AuthService, private router: Router) {
   }
 
   login$ = createEffect(() =>
@@ -17,7 +18,7 @@ export class AuthEffects {
         this.authService.login(payload).pipe(
           map((response) => loginSuccess(
             {
-              user: response?.user ?? { email: '', username: '', createdAt: ''},
+              user: response?.user ?? { email: '', username: '', createdAt: '', id: ''},
               token: response?.accessToken ?? '',
             }
             || {})),
@@ -25,5 +26,15 @@ export class AuthEffects {
         ),
       ),
     ),
+  );
+
+  // Перенаправление после успешного входа
+  loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess),
+        tap(() => this.router.navigate(['feed']))
+      ),
+    { dispatch: false } // Не диспатчим новое действие, просто выполняем сайд-эффект
   );
 }

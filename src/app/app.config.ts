@@ -6,7 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { provideState, provideStore } from '@ngrx/store';
-import { usersReducer } from './shared/store/user/user.reducer';
+import { userReducer, usersReducer } from './shared/store/user/user.reducer';
 import { UserEffects } from './shared/store/user/user.effects';
 import { provideEffects } from '@ngrx/effects';
 import { authReducer } from './shared/store/auth/auth.reducer';
@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideStore(),
     provideState('users', usersReducer),
+    provideState('user', userReducer),
     provideEffects([UserEffects]),
     provideState('auth', authReducer),
     provideEffects([AuthEffects])

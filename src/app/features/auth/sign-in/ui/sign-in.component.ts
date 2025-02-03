@@ -6,8 +6,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SignInValidationService } from '../model/sign-in-validation.service';
-import { BehaviorSubject, finalize, take } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../../shared/api/auth/auth.service';
+import { Store } from '@ngrx/store';
+import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../../../shared/store/auth/auth.selectors';
+import { login } from '../../../../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-sign-in',
@@ -34,6 +37,13 @@ export class SignInComponent {
   private readonly authService = inject(AuthService);
   private readonly activatedRoute = inject(Router);
 
+  user$ = this.store.select(selectAuthUser);
+  loading$ = this.store.select(selectAuthLoading);
+  error$ = this.store.select(selectAuthError);
+
+  constructor(private store: Store) {
+  }
+
   onSubmit(): void {
     this.formLoading$.next(true);
     if (this.signInFormGroup.invalid) {
@@ -45,14 +55,13 @@ export class SignInComponent {
 
     if (this.signInFormGroup.valid) {
       // TODO убрать username из модели
-      this.authService.login({
-        username: '',
-        password: this.signInFormGroup.value.password ?? '',
-        email: this.signInFormGroup.value.email ?? '',
-      }).pipe(finalize(() => {
-        this.formLoading$.next(false);
-        this.activatedRoute.navigate(['feed'])
-      }), take(1)).subscribe();
+      this.store.dispatch(login({
+            username: '',
+            password: this.signInFormGroup.value.password ?? '',
+            email: this.signInFormGroup.value.email ?? '',
+          },
+        ),
+      );
     }
   }
 }

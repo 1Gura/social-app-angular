@@ -11,6 +11,12 @@ export interface UsersState {
   error: string | null;
 }
 
+export interface UserState {
+  user: User;
+  loading: boolean;
+  error: string | null;
+}
+
 @Injectable()
 export class UsersStore extends ComponentStore<UsersState> {
   constructor(private http: HttpClient, private readonly userService: UserService) {

@@ -26,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        debugger
         if (error.status === 401) {
           return this.handle401Error(authReq, next);
         }
@@ -42,7 +41,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken$().pipe(
         switchMap((refreshTokenResponse: RefreshTokenResponse) => {
-          debugger
           this.isRefreshing = false;
           this.refreshTokenSubject.next(refreshTokenResponse.accessToken);
           this.localStorageService.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, refreshTokenResponse.accessToken);
@@ -54,7 +52,6 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(newAuthReq);
         }),
         catchError((refreshError) => {
-          debugger
           this.isRefreshing = false;
           this.authService.logout({ token: '' });
           return throwError(() => refreshError);
