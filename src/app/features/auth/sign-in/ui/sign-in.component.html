@@ -18,7 +18,7 @@
                         [label]="'Password'"></app-base-input>
       </div>
       <div class="sign-in__button-group mt-4 flex flex-column align-items-center justify-content-center">
-        <app-base-button [buttonLabel]="formLoading$ ? 'Sign In...' : 'Sign In'"
+        <app-base-button [buttonLabel]="(formLoading$ | async)  ? 'Sign In...' : 'Sign In'"
                          [loading]="formLoading$ | async"></app-base-button>
         <app-base-button [buttonColor]="noneButtonColor" [buttonLabel]="'Sign in with Google'"
                          [iconPath]="'assets/icons/icons8-google.svg'"></app-base-button>

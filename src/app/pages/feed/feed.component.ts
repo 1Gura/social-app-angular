@@ -38,7 +38,6 @@ export class FeedComponent implements OnInit {
 
   fetchUser() {
     this.userByAccessToken$.pipe(take(1)).subscribe((userByAccessToken) => {
-      debugger
         if (userByAccessToken) {
           this.store.dispatch(loadUserById({id: userByAccessToken.userId}));
         }

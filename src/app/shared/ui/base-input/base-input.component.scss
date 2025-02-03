@@ -3,11 +3,9 @@
 }
 
 .p-component {
-
 }
 
 .base-input__gap {
-  //gap: 0.75rem;
 }
 
 
@@ -19,6 +17,17 @@
     background-color: var(--bg-color);
     outline: none;
     color: var(--second-text-color);
+
+    ::ng-deep {
+      input {
+        height: 48px;
+        width: 400px;
+        border-radius: 8px;
+        background-color: var(--bg-color);
+        outline: none;
+        color: var(--second-text-color);
+      }
+    }
   }
 
   &__label {

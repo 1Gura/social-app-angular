@@ -1,18 +1,22 @@
 <div [formGroup]="formGroup" class="base-input flex flex-column base-input__gap">
   <label [for]="uniqueId" class="base-input__label base-medium mb-2">{{ label }}</label>
-  <input
-    (blur)="onBlurEmail()"
-    [formControlName]="formInputName"
-    [id]="uniqueId"
-    [type]="type"
-    aria-describedby="formname-help"
-    class="base-input__text-field base-medium"
-    pInputText />
+  @if (type === 'password') {
+    <p-password formControlName="password" [feedback]="false" class="base-input__text-field base-medium" [toggleMask]="true" />
+  } @else {
+    <input
+      (blur)="onBlurEmail()"
+      [formControlName]="formInputName"
+      [id]="uniqueId"
+      [type]="type"
+      aria-describedby="formname-help"
+      class="base-input__text-field base-medium"
+      pInputText />
 
-  <!--    TODO Тут добавить проверку на коректную валидацию-->
-  <div class="base-input__error-container">
-    <small *ngIf="isInvalidControl && isTouchedControl" id="formname-help">
-      {{ errorMessage }}
-    </small>
-  </div>
+    <!--    TODO Тут добавить проверку на коректную валидацию-->
+    <div class="base-input__error-container">
+      <small *ngIf="isInvalidControl && isTouchedControl" id="formname-help">
+        {{ errorMessage }}
+      </small>
+    </div>
+  }
 </div>

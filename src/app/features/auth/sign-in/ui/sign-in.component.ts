@@ -3,14 +3,15 @@ import { BaseButtonComponent } from '../../../../shared/ui/base-button/base-butt
 import { BaseInputComponent } from '../../../../shared/ui/base-input/base-input.component';
 import { ButtonBackgroundColors } from '../../../../shared/ui/base-button/button-background-colors';
 import { Router, RouterLink } from '@angular/router';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, NgIf, NgOptimizedImage } from '@angular/common';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInValidationService } from '../model/sign-in-validation.service';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../../shared/api/auth/auth.service';
 import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../../../shared/store/auth/auth.selectors';
 import { login } from '../../../../shared/store/auth/auth.actions';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,6 +23,9 @@ import { login } from '../../../../shared/store/auth/auth.actions';
     NgOptimizedImage,
     ReactiveFormsModule,
     AsyncPipe,
+    NgIf,
+    PasswordModule,
+    FormsModule,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
@@ -40,6 +44,8 @@ export class SignInComponent {
   user$ = this.store.select(selectAuthUser);
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
+
+  value = ''
 
   constructor(private store: Store) {
   }

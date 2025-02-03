@@ -11,6 +11,7 @@ import { UserEffects } from './shared/store/user/user.effects';
 import { provideEffects } from '@ngrx/effects';
 import { authReducer } from './shared/store/auth/auth.reducer';
 import { AuthEffects } from './shared/store/auth/auth.effects';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideState('user', userReducer),
     provideEffects([UserEffects]),
     provideState('auth', authReducer),
-    provideEffects([AuthEffects])
+    provideEffects([AuthEffects]),
+    provideAnimations()
   ],
 };
