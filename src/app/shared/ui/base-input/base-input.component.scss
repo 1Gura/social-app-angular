@@ -1,3 +1,12 @@
+@mixin input-style() {
+  height: 48px;
+  width: 400px;
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  outline: none;
+  color: var(--second-text-color);
+}
+
 :host {
   display: block;
 }
@@ -11,21 +20,11 @@
 
 .base-input {
   &__text-field {
-    height: 48px;
-    width: 400px;
-    border-radius: 8px;
-    background-color: var(--bg-color);
-    outline: none;
-    color: var(--second-text-color);
+    @include input-style();
 
     ::ng-deep {
       input {
-        height: 48px;
-        width: 400px;
-        border-radius: 8px;
-        background-color: var(--bg-color);
-        outline: none;
-        color: var(--second-text-color);
+        @include input-style();
       }
     }
   }
