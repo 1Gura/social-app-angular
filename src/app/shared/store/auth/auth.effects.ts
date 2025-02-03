@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { login, loginFailure, loginSuccess } from './auth.actions';
+import {
+  getAuthUserByAccessToken,
+  getAuthUserByAccessTokenFailure,
+  getAuthUserByAccessTokenSuccess,
+  login,
+  loginFailure,
+  loginSuccess,
+} from './auth.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of, tap } from 'rxjs';
 import { AuthService } from '../../api/auth/auth.service';
@@ -37,4 +44,13 @@ export class AuthEffects {
       ),
     { dispatch: false } // Не диспатчим новое действие, просто выполняем сайд-эффект
   );
+
+  getAuthUserByToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getAuthUserByAccessToken),
+      switchMap(() => this.authService.getAuthUserByAccessToken$().pipe(
+        map((response) => getAuthUserByAccessTokenSuccess(response)),
+        catchError((error) => of(getAuthUserByAccessTokenFailure(error))),
+      ))
+    ))
 }

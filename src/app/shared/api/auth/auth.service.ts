@@ -72,14 +72,22 @@ export class AuthService {
     return this.http.post<RefreshTokenResponse>(`${this.API_URL}/refresh-token`, {}, { withCredentials: true }).pipe(
       catchError((error: HttpErrorResponse) => {
         this.logout({ token: this.localStorageService.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '' });
-        return of({valid: false, message: error.message, accessToken: '', refreshToken: ''});
+        return of({ valid: false, message: error.message, accessToken: '', refreshToken: '' });
       }),
     );
   }
 
   checkAccessToken$(): Observable<boolean> {
     // Пример: проверяем наличие токена в LocalStorage
-    return this.http.get<{ isAuthenticated: boolean }>(`${this.API_URL}/check`)
+    return this.http.get<{ isAuthenticated: boolean }>(`${this.API_URL}/check`, { withCredentials: true })
       .pipe(map(response => response.isAuthenticated));
+  }
+
+  getAuthUserByAccessToken$(): Observable<{ userId: string, email: string, username: string }> {
+    return this.http.get<{
+      userId: string,
+      email: string,
+      username: string
+    }>(`${this.API_URL}/me`, { withCredentials: true });
   }
 }

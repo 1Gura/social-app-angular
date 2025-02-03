@@ -1,5 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import { login, loginFailure, loginSuccess, logout } from './auth.actions';
+import {
+  getAuthUserByAccessToken,
+  getAuthUserByAccessTokenFailure,
+  getAuthUserByAccessTokenSuccess,
+  login,
+  loginFailure,
+  loginSuccess,
+  logout,
+} from './auth.actions';
 import { initialAuthState } from './auth.state';
 
 export const authReducer = createReducer(
@@ -24,5 +32,21 @@ export const authReducer = createReducer(
     loading: false
   })),
 
-  on(logout, () => initialAuthState)
+  on(logout, () => initialAuthState),
+  on(getAuthUserByAccessToken, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+
+  on(getAuthUserByAccessTokenSuccess, (state, accessUserInfo) => ({
+    ...state,
+    accessUserInfo,
+    loading: false
+  })),
+  on(getAuthUserByAccessTokenFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false
+  })),
 );

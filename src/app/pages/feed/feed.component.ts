@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../entities/lib/api/users/users.service';
 import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../shared/store/auth/auth.selectors';
+import { selectAccessUserInfo, selectAuthError, selectAuthLoading } from '../../shared/store/auth/auth.selectors';
 import { take } from 'rxjs';
-import { UserInfoResponse } from '../../shared/api/auth/auth.types';
 import { loadUserById } from '../../shared/store/user/user.actions';
 import { selectUser } from '../../shared/store/user/user.selectors';
+import { getAuthUserByAccessToken } from '../../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-feed',
@@ -24,7 +24,7 @@ import { selectUser } from '../../shared/store/user/user.selectors';
   styleUrl: './feed.component.scss',
 })
 export class FeedComponent implements OnInit {
-  user$ = this.store.select(selectAuthUser);
+  userByAccessToken$ = this.store.select(selectAccessUserInfo);
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
   userInfo$ = this.store.select(selectUser)
@@ -33,13 +33,14 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchUsers()
+    this.store.dispatch(getAuthUserByAccessToken());
   }
 
-  fetchUsers() {
-    this.user$.pipe(take(1)).subscribe((user: UserInfoResponse | null) => {
-        if (user) {
-          this.store.dispatch(loadUserById({id: user.id}));
+  fetchUser() {
+    this.userByAccessToken$.pipe(take(1)).subscribe((userByAccessToken) => {
+      debugger
+        if (userByAccessToken) {
+          this.store.dispatch(loadUserById({id: userByAccessToken.userId}));
         }
       },
     );
