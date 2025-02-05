@@ -3,16 +3,17 @@ import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'home', loadComponent: () =>
-      import('./pages/home-page/home-page.component').then(
-        (m) => m.HomePageComponent
-      ),
-    canActivate: [authGuard],
+    path: '',
+    redirectTo: 'feed', // Перенаправление на /feed
+    pathMatch: 'full'  // Важно! Без этого Angular будет пытаться сопоставить любые маршруты
   },
   {
-    path: 'feed',
-    loadComponent: () => import('./pages/feed/feed.component').then((m) => m.FeedComponent),
-    canActivate: [authGuard]
+    path: '',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/root-layout/root-layout.component').then(m => m.RootLayoutComponent),
+    children: [
+      { path: 'feed', loadComponent: () => import('./pages/feed/feed.component').then(m => m.FeedComponent) },
+    ],
   },
   {
     path: 'auth',
@@ -21,23 +22,23 @@ export const routes: Routes = [
       {
         path: '', // Пустой путь для редиректа при попытке доступа к /auth
         redirectTo: 'sign-in',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'sign-in', loadComponent: () =>
           import('./widgets/auth/sign-in-page/sign-in-page.component').then(
-            (m) => m.SignInPageComponent
+            (m) => m.SignInPageComponent,
           ),
       },
       {
         path: 'sign-up', loadComponent: () =>
           import('./widgets/auth/sign-up-page/sign-up-page.component').then(
-            (m) => m.SignUpPageComponent
-          )
+            (m) => m.SignUpPageComponent,
+          ),
       },
     ],
-    canActivate: [authGuard]
+    canActivate: [authGuard],
 
   },
-  {path: '**', redirectTo: 'auth', pathMatch: 'full'}
+  { path: '**', redirectTo: 'auth', pathMatch: 'full' },
 ];

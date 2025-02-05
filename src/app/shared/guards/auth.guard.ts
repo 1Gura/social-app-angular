@@ -6,7 +6,7 @@ import { catchError, map, Observable, take } from 'rxjs';
 export const authGuard = (route: ActivatedRouteSnapshot): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
+  
   const handleRedirect = (isAuthenticated: boolean, isAuthPage: boolean): boolean | UrlTree => {
     if (isAuthenticated && isAuthPage) {
       // Авторизованный пользователь пытается попасть на страницу авторизации

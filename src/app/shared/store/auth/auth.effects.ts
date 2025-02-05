@@ -7,6 +7,9 @@ import {
   login,
   loginFailure,
   loginSuccess,
+  logout,
+  logoutFailure,
+  logoutSuccess,
 } from './auth.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of, tap } from 'rxjs';
@@ -52,5 +55,33 @@ export class AuthEffects {
         map((response) => getAuthUserByAccessTokenSuccess(response)),
         catchError((error) => of(getAuthUserByAccessTokenFailure(error))),
       ))
-    ))
+    ));
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      switchMap(() =>
+        this.authService.logout({token: ''}).pipe(
+          map(() => logoutSuccess()),
+          catchError(() => of(logoutFailure()))
+        )
+      )
+    )
+  );
+
+  logoutSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logoutSuccess),
+        tap(() => {
+          // Очистка локального хранилища
+          localStorage.removeItem('token');
+          // Перенаправление на страницу логина
+          this.router.navigate(['/login']);
+          // Можно также очистить стейт в редьюсере
+        })
+      ),
+    { dispatch: false } // Не диспатчит новое действие
+  );
 }
+

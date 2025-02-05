@@ -7,6 +7,7 @@ import {
   loginFailure,
   loginSuccess,
   logout,
+  logoutSuccess,
 } from './auth.actions';
 import { initialAuthState } from './auth.state';
 
@@ -49,4 +50,12 @@ export const authReducer = createReducer(
     error,
     loading: false
   })),
+
+  on(logoutSuccess, () => ({
+    user: null,
+    accessUserInfo: null,
+    token: null,
+    loading: false,
+    error: null
+  }))
 );

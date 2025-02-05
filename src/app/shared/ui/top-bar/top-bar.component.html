@@ -1,0 +1,15 @@
+<section class="flex top-bar">
+  <div class="flex-between py-4 px-5">
+    <a [routerLink]="['/']" class="flex gap-3 align-items-center">
+      <img  ngSrc="/assets/icons/logo.svg" alt="logo" height="30" width="30">
+    </a>
+
+    <div class="flex gap-4">
+      <app-base-button
+        [buttonBorder]="false"
+        [buttonColor]="inheritButtonColor"
+        [iconPath]="'assets/icons/logout-button.svg'">
+      </app-base-button>
+    </div>
+  </div>
+</section>

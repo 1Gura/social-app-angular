@@ -39,6 +39,23 @@
   }
 }
 
+.without-border {
+  ::ng-deep {
+    .p-button {
+      border: 0;
+    }
+  }
+}
+
+.inherit-background-color {
+  ::ng-deep {
+    .p-button {
+      color: #1F1F22;
+      background-color: inherit;
+    }
+  }
+}
+
 .base-button {
   width: 100%;
 
