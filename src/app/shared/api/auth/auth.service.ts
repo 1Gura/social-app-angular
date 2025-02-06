@@ -62,7 +62,7 @@ export class AuthService {
    */
   logout(payload: LogoutRequest): Observable<LogoutResponse> {
     // TODO тут неправильно, нужно передавать refreshToken, а не access.
-    return this.http.post<LogoutResponse>(`${this.API_URL}/logout`, payload).pipe(tap(() => {
+    return this.http.post<LogoutResponse>(`${this.API_URL}/logout`, payload, { withCredentials: true }).pipe(tap(() => {
       this.localStorageService.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
       this.localStorageService.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN);
     }));

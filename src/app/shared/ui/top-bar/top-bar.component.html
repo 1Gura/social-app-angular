@@ -1,15 +1,26 @@
 <section class="flex top-bar">
-  <div class="flex-between py-4 px-5">
-    <a [routerLink]="['/']" class="flex gap-3 align-items-center">
-      <img  ngSrc="/assets/icons/logo.svg" alt="logo" height="30" width="30">
-    </a>
+  <div class="flex justify-content-between align-items-center w-full py-2 px-3">
+    <div class="flex align-items-center gap-2 font-bold text-2xl">
+      <a [routerLink]="['/']" class="gap-3 align-items-center">
+        <img  ngSrc="/assets/icons/logo.svg" alt="logo" height="30" width="30">
+      </a>
+      <span class="top-bar__label">Connectify</span>
+    </div>
 
-    <div class="flex gap-4">
+
+    <div class="flex gap-4 align-items-center">
       <app-base-button
+        class="flex-1-1-100"
+        (click)="onLogout()"
         [buttonBorder]="false"
         [buttonColor]="inheritButtonColor"
         [iconPath]="'assets/icons/logout-button.svg'">
       </app-base-button>
+      <a [routerLink]="['profile' + (user$ | async)?.id]" class="flex-1-1-100">
+        <p-avatar icon="pi pi-user" class="mr-2" size="normal" shape="circle" />
+
+<!--        <img class="h-2rem w-2rem border-round" [ngSrc]="(user$ | async)?.id ?? 'assets/icons/user.png'" alt="profile" height="30" width="30">-->
+      </a>
     </div>
   </div>
 </section>
