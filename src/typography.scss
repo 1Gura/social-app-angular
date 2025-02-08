@@ -34,6 +34,15 @@ body {
   color: var(--second-text-color); /* Использование цветовых переменных */
 }
 
+.font-xs { font-size: 12px; }
+.font-sm { font-size: 14px; }
+.font-md { font-size: 16px; }
+.font-lg { font-size: 18px; }
+.font-xl { font-size: 24px; }
+.font-2xl { font-size: 32px; }
+.font-3xl { font-size: 40px; }
+
+
 
 // Заголовки
 h1, h2, h3, h4, h5, h6 {
@@ -69,7 +78,7 @@ h1 {
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: var(--second-text-color);
-  
+
 }
 
 h2 {
@@ -144,13 +153,13 @@ p {
 
 // Списки
 ul, ol {
-  margin: 0 0 1em 1.5em;
+  margin: 0;
   padding: 0;
   line-height: $line-height-base;
 }
 
 ul li, ol li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
 }
 
 // Текстовые стили для ссылок
@@ -158,9 +167,9 @@ a {
   color: var(--button-bg-color); // Цвет ссылки
   text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
+  //&:hover {
+  //  text-decoration: underline;
+  //}
 }
 
 // Размеры текста

@@ -40,9 +40,10 @@ export const authReducer = createReducer(
     error: null
   })),
 
-  on(getAuthUserByAccessTokenSuccess, (state, accessUserInfo) => ({
+  on(getAuthUserByAccessTokenSuccess, (state, { user, token }) => ({
     ...state,
-    accessUserInfo,
+    user,
+    token,
     loading: false
   })),
   on(getAuthUserByAccessTokenFailure, (state, { error }) => ({

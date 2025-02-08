@@ -1,3 +1,40 @@
 :host {
   display: block;
+  min-width: 270px;
+  height: 100%;
+  background-color: var();
+}
+
+
+.left-side-bar {
+  padding: 48px 24px;
+  &__navigation {
+    color: var(--bg-color);
+
+  }
+
+  &__avatar {
+
+
+    ::ng-deep {
+      span {
+        background-color: #ece9fc;
+        color: #2a1261;
+      }
+    }
+  }
+
+  &__label {
+    color: var(--reverse-main-color);
+  }
+
+  &__username {
+
+    color: var(--reverse-main-color);
+
+  }
+
+  &__login {
+    color: var(--secondary-text-color);
+  }
 }

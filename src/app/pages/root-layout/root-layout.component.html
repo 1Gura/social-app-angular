@@ -1,8 +1,10 @@
 <div class="root-layout h-screen">
-  <app-top-bar></app-top-bar>
-  <app-left-side-bar></app-left-side-bar>
-  <section class="flex flex-1 h-full">
-    <router-outlet></router-outlet>
-  </section>
+  <app-top-bar class="root-layout__header"></app-top-bar>
+  <div class="flex h-full">
+    <app-left-side-bar></app-left-side-bar>
+    <section class="flex flex-1 h-full">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
   <app-bottom-bar></app-bottom-bar>
 </div>

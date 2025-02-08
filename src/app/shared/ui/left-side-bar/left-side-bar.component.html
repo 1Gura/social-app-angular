@@ -1,3 +1,59 @@
-<div class="left-side-bar">
-Left side bar
+<div class="left-side-bar h-full">
+  <nav class="left-side-bar__navigation h-full flex flex-column justify-content-between">
+    <div class="left-side-bar__top ">
+      <div class="flex align-items-center gap-2 font-bold text-2xl">
+        <a [routerLink]="['/']" class="gap-2 align-items-center flex">
+          <img ngSrc="/assets/icons/logo.svg" alt="logo" height="30" width="30">
+          <span class="left-side-bar__label">Connectify</span>
+        </a>
+      </div>
+      <div *ngIf="(user$ | async) as user" class="flex align-items-center gap-2 font-bold text-2xl">
+        <a [routerLink]="['/profile/', user?.id]" class="gap-2 align-items-center flex">
+          <div class="gap-2 align-items-center flex">
+            <p-avatar class="left-side-bar__avatar" icon="pi pi-user" size="large"
+                      shape="circle" />
+            <div>
+              <div class="left-side-bar__username font-lg">{{ user.username }}</div>
+              <div class="left-side-bar__login font-sm">{{ user.email }}</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <ul class="flex flex-column gap-4">
+        <li>
+          12123123
+        </li>
+        <li>
+          <a href="">1</a>
+        </li>
+        <li>
+          <a href="">1</a>
+        </li>
+        <li>
+          <a href="">1</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="left-side-bar__bottom flex flex-column justify-content-between">
+      <app-base-button
+        class="flex-1-1-100"
+        buttonLabel="Logout"
+        [buttonBorder]="false"
+        [buttonColor]="inheritButtonColor"
+        [iconPath]="'assets/icons/logout-button.svg'"
+        (click)="onLogout()"
+      >
+      </app-base-button>
+      <app-base-button
+        class="flex-1-1-100"
+        buttonLabel="Settings"
+        [buttonBorder]="false"
+        [buttonColor]="inheritButtonColor"
+        [iconPath]="'assets/icons/settings-icon.svg'"
+        (click)="onLogout()"
+      >
+      </app-base-button>
+    </div>
+  </nav>
 </div>

@@ -2,7 +2,7 @@
   background-color: #333;
 
   &__label {
-    color: #FFFFFF;
+    color: var(--reverse-main-color);
   }
 
   &__link {

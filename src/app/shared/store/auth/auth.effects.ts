@@ -28,7 +28,7 @@ export class AuthEffects {
         this.authService.login(payload).pipe(
           map((response) => loginSuccess(
             {
-              user: response?.user ?? { email: '', username: '', createdAt: '', id: ''},
+              user: response?.user ?? { email: '', username: '', createdAt: '', id: '' },
               token: response?.accessToken ?? '',
             }
             || {})),
@@ -43,30 +43,33 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(loginSuccess),
-        tap(() => this.router.navigate(['feed']))
+        tap(() => this.router.navigate(['feed'])),
       ),
-    { dispatch: false } // Не диспатчим новое действие, просто выполняем сайд-эффект
+    { dispatch: false }, // Не диспатчим новое действие, просто выполняем сайд-эффект
   );
 
   getAuthUserByToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAuthUserByAccessToken),
       switchMap(() => this.authService.getAuthUserByAccessToken$().pipe(
-        map((response) => getAuthUserByAccessTokenSuccess(response)),
+        map((response) => getAuthUserByAccessTokenSuccess({
+          token: '',
+          user: { email: response.email, username: response.username, createdAt: '', id: response.userId },
+        })),
         catchError((error) => of(getAuthUserByAccessTokenFailure(error))),
-      ))
+      )),
     ));
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(logout),
       switchMap(() =>
-        this.authService.logout({token: ''}).pipe(
+        this.authService.logout({ token: '' }).pipe(
           map(() => logoutSuccess()),
-          catchError(() => of(logoutFailure()))
-        )
-      )
-    )
+          catchError(() => of(logoutFailure())),
+        ),
+      ),
+    ),
   );
 
   logoutSuccess$ = createEffect(
@@ -79,9 +82,9 @@ export class AuthEffects {
           // Перенаправление на страницу логина
           this.router.navigate(['/login']);
           // Можно также очистить стейт в редьюсере
-        })
+        }),
       ),
-    { dispatch: false } // Не диспатчит новое действие
+    { dispatch: false }, // Не диспатчит новое действие
   );
 }
 

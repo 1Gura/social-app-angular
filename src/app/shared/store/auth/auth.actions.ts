@@ -22,11 +22,7 @@ export const logoutFailure = createAction('[Auth] Logout Failure');
 
 
 export const getAuthUserByAccessToken = createAction('[Auth] Get User By Access Token');
-export const getAuthUserByAccessTokenSuccess = createAction('[Auth] Get User By Access Token Success', props<{
-  userId: string,
-  email: string,
-  username: string
-}>());
+export const getAuthUserByAccessTokenSuccess = createAction('[Auth] Get User By Access Token Success', props<{ user: UserInfoResponse; token: string }>());
 export const getAuthUserByAccessTokenFailure = createAction('[Auth] Get User By Access Token Failure', props<{error: string}>());
 
 
