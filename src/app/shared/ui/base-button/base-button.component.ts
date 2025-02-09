@@ -21,4 +21,6 @@ export class BaseButtonComponent {
   @Input() iconPath = '';
   @Input() isSubmit = false;
   @Input() loading: boolean | null = null;
+  @Input() widthImg = '24';
+  @Input() heightImg = '24';
 }

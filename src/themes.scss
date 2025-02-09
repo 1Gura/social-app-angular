@@ -1,6 +1,7 @@
 :root {
   /* Основные цвета, общие для обеих тем */
   --primary-color: #877EFF;
+  --background-primary: #877EFF;
   --secondary-color: #FFB620;
   --background-gradient: linear-gradient(180deg, #877EFF 0%, #685DFF 46.15%, #3121FF 100%);
   --white-color: #FFFFFF;
@@ -10,6 +11,7 @@
   --reverse-main-color: #000000;
   --second-text-color: #09090A; /* Основной цвет текста для светлой темы */
   --bg-color: #EFEFEF; /* цвет фона для светлой темы */
+  --bg-color2: #F7F7F7;
   --secondary-bg-color: #7878A3; /* Вторичный цвет текста для светлой темы */
   --secondary-text-color: #7878A3; /* Вторичный цвет текста для светлой темы */
   --border-color: #5C5C7B; /* Цвет границ для светлой темы */
@@ -21,6 +23,7 @@
   --reverse-main-color: #FFFFFF;
   --second-text-color: #EFEFEF; /* Основной цвет текста для темной темы */
   --bg-color: #09090A; /* цвет фона для темной темы */
+  --bg-color2: #313131;
   --secondary-bg-color: #7878A3; /* Вторичный цвет текста для темной темы */
   --secondary-text-color: #7878A3; /* Вторичный цвет текста для темной темы */
   --border-color: #1F1F22; /* Цвет границ для темной темы */

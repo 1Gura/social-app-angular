@@ -7,21 +7,49 @@
 
 
 .left-side-bar {
+  background-color: var(--bg-color2);
   padding: 48px 24px;
-  &__navigation {
-    color: var(--bg-color);
 
+  &__navigation {
+  }
+
+  &__profile {
+    padding: 44px 0;
   }
 
   &__avatar {
-
+    height: 56px;
+    width: 56px;
 
     ::ng-deep {
+      .p-avatar {
+        height: 56px;
+        width: 56px;
+      }
+
       span {
         background-color: #ece9fc;
         color: #2a1261;
       }
     }
+  }
+
+  &__menu-item {
+    position: relative;
+    height: 56px;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 16px;
+
+    &:hover {
+      color: white;
+      background-color: var(--background-primary);
+    }
+  }
+
+  &__menu-img {
+    height: 21.5px;
+    width: 21.5px;
   }
 
   &__label {
@@ -37,4 +65,22 @@
   &__login {
     color: var(--secondary-text-color);
   }
+
+  &__bottom {
+    ::ng-deep {
+      .p-button-label {
+        flex: 0 1 auto;
+      }
+
+      button {
+        padding: 16px;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+.left-side-bar__menu-item.active {
+  color: white;
+  background-color: var(--background-primary);
 }

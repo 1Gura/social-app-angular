@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe, JsonPipe, NgIf, NgOptimizedImage } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { getAuthUserByAccessToken, logout } from '../../store/auth/auth.actions';
@@ -7,6 +7,7 @@ import { selectAuthUser } from '../../store/auth/auth.selectors';
 import { BaseButtonComponent } from '../base-button/base-button.component';
 import { ButtonBackgroundColors } from '../base-button/button-background-colors';
 import { AvatarModule } from 'primeng/avatar';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -19,17 +20,58 @@ import { AvatarModule } from 'primeng/avatar';
     NgIf,
     JsonPipe,
     AvatarModule,
+    Button,
+    RouterLinkActive,
   ],
   templateUrl: './left-side-bar.component.html',
-  styleUrl: './left-side-bar.component.scss'
+  styleUrl: './left-side-bar.component.scss',
 })
 export class LeftSideBarComponent {
   user$ = this.store.select(selectAuthUser);
 
   readonly inheritButtonColor = ButtonBackgroundColors.inherit;
 
+  readonly barLinks = [
+    {
+      img: '/assets/icons/home.svg',
+      route: '/',
+      label: 'Home',
+    },
+    {
+      img: '/assets/icons/explore.svg',
+      route: '/explore',
+      label: 'Explore',
+    },
+    {
+      img: '/assets/icons/people.svg',
+      route: '/people',
+      label: 'People',
+    },
+    {
+      img: '/assets/icons/saved.svg',
+      route: '/saved',
+      label: 'Saved',
+    },
+    {
+      img: '/assets/icons/reels.svg',
+      route: '/saved',
+      label: 'Reels',
+    },
+    {
+      img: '/assets/icons/chats.svg',
+      route: '/saved',
+      label: 'Chats',
+    },
+    {
+      img: '/assets/icons/create-post.svg',
+      route: '/saved',
+      label: 'Create Post',
+    },
+
+  ];
+
   constructor(private readonly store: Store) {
-    this.store.dispatch(getAuthUserByAccessToken())
+    this.store.dispatch(getAuthUserByAccessToken());
   }
 
   onLogout(): void {

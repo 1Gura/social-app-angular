@@ -7,31 +7,32 @@
           <span class="left-side-bar__label">Connectify</span>
         </a>
       </div>
-      <div *ngIf="(user$ | async) as user" class="flex align-items-center gap-2 font-bold text-2xl">
+      <div *ngIf="(user$ | async) as user"
+           class="left-side-bar__profile flex align-items-center gap-2 font-bold text-2xl">
         <a [routerLink]="['/profile/', user?.id]" class="gap-2 align-items-center flex">
-          <div class="gap-2 align-items-center flex">
-            <p-avatar class="left-side-bar__avatar" icon="pi pi-user" size="large"
+          <div class="gap-3 align-items-center flex">
+            <p-avatar class="left-side-bar__avatar align-items-center" icon="pi pi-user" size="large"
                       shape="circle" />
             <div>
-              <div class="left-side-bar__username font-lg">{{ user.username }}</div>
-              <div class="left-side-bar__login font-sm">{{ user.email }}</div>
+              <p class="left-side-bar__username font-lg">{{ user.username }}</p>
+              <p class="left-side-bar__login font-sm">{{ user.email }}</p>
             </div>
           </div>
         </a>
       </div>
       <ul class="flex flex-column gap-4">
-        <li>
-          12123123
-        </li>
-        <li>
-          <a href="">1</a>
-        </li>
-        <li>
-          <a href="">1</a>
-        </li>
-        <li>
-          <a href="">1</a>
-        </li>
+        @for (link of barLinks; track link.label) {
+          <li
+            class="left-side-bar__menu-item"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="flex gap-3" [routerLink]="[link.route]">
+              <img class="left-side-bar__menu-img" [src]="link.img" alt="home" />
+              <span>{{ link.label }}</span>
+            </a>
+          </li>
+        }
       </ul>
     </div>
 
@@ -42,6 +43,8 @@
         [buttonBorder]="false"
         [buttonColor]="inheritButtonColor"
         [iconPath]="'assets/icons/logout-button.svg'"
+        heightImg="21.5"
+        widthImg="21.5"
         (click)="onLogout()"
       >
       </app-base-button>
