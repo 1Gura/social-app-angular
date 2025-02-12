@@ -1,3 +1,18 @@
-<div class="bottom-bar">
-Bottom bar
-</div>
+<section class="bottom-bar">
+  <ul class="flex gap-4">
+    @for (link of barLinks; track link.label) {
+      <li
+        class="bottom-bar__menu-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="flex gap-3" [routerLink]="[link.route]">
+          <img class="bottom-bar__menu-img"
+               [src]="link.img"
+               alt="home" />
+          <span>{{ link.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>

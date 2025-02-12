@@ -1,3 +1,28 @@
 :host {
   display: block;
 }
+
+.bottom-bar {
+  &__menu-item {
+    position: relative;
+    height: 56px;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 16px;
+
+    &:hover {
+      color: white;
+      background-color: var(--background-primary);
+    }
+  }
+
+  &__menu-img {
+    height: 21.5px;
+    width: 21.5px;
+  }
+
+  &__label {
+    color: var(--reverse-main-color);
+  }
+
+}

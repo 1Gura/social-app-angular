@@ -23,6 +23,16 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/create-post/create-post.component').then(m => m.CreatePostComponent),
       },
+      {
+        path: 'explore',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/explore/explore.component').then(m => m.ExploreComponent),
+      },
+      {
+        path: 'saved',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/saved/saved.component').then(m => m.SavedComponent),
+      },
     ],
   },
 

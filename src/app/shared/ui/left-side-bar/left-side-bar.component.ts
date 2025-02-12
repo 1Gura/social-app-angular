@@ -9,6 +9,7 @@ import { ButtonBackgroundColors } from '../base-button/button-background-colors'
 import { AvatarModule } from 'primeng/avatar';
 import { Button } from 'primeng/button';
 import { ChangeColorDirective } from '../../directives/change-color.directive';
+import { BAR_LINKS } from '../../constants/bar-links';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -33,44 +34,7 @@ export class LeftSideBarComponent {
 
   readonly inheritButtonColor = ButtonBackgroundColors.inherit;
 
-  readonly barLinks = [
-    {
-      img: '/assets/icons/home.svg',
-      route: '/feed',
-      label: 'Home',
-    },
-    {
-      img: '/assets/icons/explore.svg',
-      route: '/explore',
-      label: 'Explore',
-    },
-    {
-      img: '/assets/icons/people.svg',
-      route: '/all-users',
-      label: 'People',
-    },
-    {
-      img: '/assets/icons/saved.svg',
-      route: '/saved',
-      label: 'Saved',
-    },
-    {
-      img: '/assets/icons/reels.svg',
-      route: '/saved',
-      label: 'Reels',
-    },
-    {
-      img: '/assets/icons/chats.svg',
-      route: '/saved',
-      label: 'Chats',
-    },
-    {
-      img: '/assets/icons/create-post.svg',
-      route: '/create-post',
-      label: 'Create Post',
-    },
-
-  ];
+  readonly barLinks = BAR_LINKS;
 
   constructor(private readonly store: Store) {
     this.store.dispatch(getAuthUserByAccessToken());

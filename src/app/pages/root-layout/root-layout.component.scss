@@ -8,11 +8,19 @@
   &__header {
     display: none;
   }
+
+  &__bottom-bar {
+    display: none;
+  }
 }
 
 
 @media (max-width: 768px) {
   .root-layout__header {
+    display: block;
+  }
+
+  .root-layout__bottom-bar {
     display: block;
   }
 }
