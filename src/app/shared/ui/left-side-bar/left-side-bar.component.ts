@@ -8,6 +8,7 @@ import { BaseButtonComponent } from '../base-button/base-button.component';
 import { ButtonBackgroundColors } from '../base-button/button-background-colors';
 import { AvatarModule } from 'primeng/avatar';
 import { Button } from 'primeng/button';
+import { ChangeColorDirective } from '../../directives/change-color.directive';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -22,6 +23,7 @@ import { Button } from 'primeng/button';
     AvatarModule,
     Button,
     RouterLinkActive,
+    ChangeColorDirective,
   ],
   templateUrl: './left-side-bar.component.html',
   styleUrl: './left-side-bar.component.scss',
@@ -34,7 +36,7 @@ export class LeftSideBarComponent {
   readonly barLinks = [
     {
       img: '/assets/icons/home.svg',
-      route: '/',
+      route: '/feed',
       label: 'Home',
     },
     {
@@ -44,7 +46,7 @@ export class LeftSideBarComponent {
     },
     {
       img: '/assets/icons/people.svg',
-      route: '/people',
+      route: '/all-users',
       label: 'People',
     },
     {
@@ -64,7 +66,7 @@ export class LeftSideBarComponent {
     },
     {
       img: '/assets/icons/create-post.svg',
-      route: '/saved',
+      route: '/create-post',
       label: 'Create Post',
     },
 

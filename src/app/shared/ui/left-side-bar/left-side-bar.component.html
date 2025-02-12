@@ -28,7 +28,9 @@
             [routerLinkActiveOptions]="{ exact: true }"
           >
             <a class="flex gap-3" [routerLink]="[link.route]">
-              <img class="left-side-bar__menu-img" [src]="link.img" alt="home" />
+              <img class="left-side-bar__menu-img"
+                   [src]="link.img"
+                   alt="home" />
               <span>{{ link.label }}</span>
             </a>
           </li>

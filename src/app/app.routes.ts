@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'feed', // Перенаправление на /feed
-    pathMatch: 'full'  // Важно! Без этого Angular будет пытаться сопоставить любые маршруты
+    pathMatch: 'full',  // Важно! Без этого Angular будет пытаться сопоставить любые маршруты
   },
   {
     path: '',
@@ -13,8 +13,19 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/root-layout/root-layout.component').then(m => m.RootLayoutComponent),
     children: [
       { path: 'feed', loadComponent: () => import('./pages/feed/feed.component').then(m => m.FeedComponent) },
+      {
+        path: 'all-users',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/all-users/all-users.component').then(m => m.AllUsersComponent),
+      },
+      {
+        path: 'create-post',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/create-post/create-post.component').then(m => m.CreatePostComponent),
+      },
     ],
   },
+
   {
     path: 'auth',
     loadComponent: () => import('./pages/auth-layout/auth-layout.component').then((m) => m.AuthLayoutComponent),
