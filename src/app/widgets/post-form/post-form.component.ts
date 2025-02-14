@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BaseInputComponent } from '../../shared/ui/base-input/base-input.component';
 import { BaseButtonComponent } from '../../shared/ui/base-button/base-button.component';
 import { ButtonBackgroundColors } from '../../shared/ui/base-button/button-background-colors';
+import { FileUploaderComponent } from '../../shared/ui/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-post-form',
@@ -11,6 +12,7 @@ import { ButtonBackgroundColors } from '../../shared/ui/base-button/button-backg
     BaseInputComponent,
     ReactiveFormsModule,
     BaseButtonComponent,
+    FileUploaderComponent,
   ],
   templateUrl: './post-form.component.html',
   styleUrl: './post-form.component.scss',

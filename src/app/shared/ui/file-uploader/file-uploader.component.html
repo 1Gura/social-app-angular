@@ -1,1 +1,14 @@
-<p>file-uploader works!</p>
+<div class="base-input flex flex-column base-input__gap">
+  <label [for]="uniqueId" class="base-input__label base-medium mb-2">{{ label }}</label>
+  <ngx-file-drop dropZoneLabel="Перетащите файлы сюда" (onFileDrop)="onFilesDropped($event)">
+    <ng-template ngx-file-drop-content>
+      Перетащите файлы сюда или нажмите для загрузки
+    </ng-template>
+  </ngx-file-drop>
+
+  <div class="base-input__error-container">
+    <small *ngIf="error" id="formname-help">
+      {{ errorMessage }}
+    </small>
+  </div>
+</div>

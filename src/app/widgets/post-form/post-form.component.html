@@ -6,11 +6,9 @@
                     [label]="'Caption'"
                     [isTextArea]="true"
     ></app-base-input>
-    <app-base-input
-      [formGroup]="formGroup"
-      [formInputName]="'mediaData'"
-      [label]="'Add Photo/Video'"
-    ></app-base-input>
+    <app-file-uploader
+      [label]="'Add Photos/Videos'">
+    </app-file-uploader>
     <app-base-input [formGroup]="formGroup"
                     [formInputName]="'location'"
                     [label]="'Location'"
