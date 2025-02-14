@@ -1,17 +1,34 @@
 <div [formGroup]="formGroup" class="base-input flex flex-column base-input__gap">
   <label [for]="uniqueId" class="base-input__label base-medium mb-2">{{ label }}</label>
   @if (type === 'password') {
-    <p-password formControlName="password" [feedback]="false" class="base-input__text-field base-medium" [toggleMask]="true" />
+    <p-password formControlName="password" [feedback]="false" class="base-input__text-field base-medium"
+                [toggleMask]="true" />
   } @else {
-    <input
-      (blur)="onBlurEmail()"
-      [formControlName]="formInputName"
-      [id]="uniqueId"
-      [type]="type"
-      aria-describedby="formname-help"
-      class="base-input__text-field base-medium"
-      pInputText />
-
+    @if (isTextArea) {
+      <textarea
+        (blur)="onBlurEmail()"
+        [formControlName]="formInputName"
+        [id]="uniqueId"
+        aria-describedby="formname-help"
+        class="base-input__text-field base-medium w-full"
+        pInputTextarea
+        rows="5"
+        cols="30"
+        [placeholder]="placeholder"
+        [autoResize]="true"
+      >
+      </textarea>
+    } @else {
+      <input
+        (blur)="onBlurEmail()"
+        [formControlName]="formInputName"
+        [id]="uniqueId"
+        [type]="type"
+        [placeholder]="placeholder"
+        aria-describedby="formname-help"
+        class="base-input__text-field base-medium w-full"
+        pInputText />
+    }
     <!--    TODO Тут добавить проверку на коректную валидацию-->
     <div class="base-input__error-container">
       <small *ngIf="isInvalidControl && isTouchedControl" id="formname-help">

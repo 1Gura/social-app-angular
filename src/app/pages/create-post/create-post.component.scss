@@ -1,0 +1,10 @@
+:host {
+  padding: 2rem;
+  width: 100%;
+}
+
+.create-post {
+  &__container {
+    max-width: 64rem;
+  }
+}

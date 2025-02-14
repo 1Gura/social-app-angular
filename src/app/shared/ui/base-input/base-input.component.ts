@@ -4,11 +4,12 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { NgIf } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-base-input',
   standalone: true,
-  imports: [FormsModule, InputTextModule, NgIf, ReactiveFormsModule, PasswordModule],
+  imports: [FormsModule, InputTextModule, NgIf, ReactiveFormsModule, PasswordModule, InputTextareaModule],
   templateUrl: './base-input.component.html',
   styleUrl: './base-input.component.scss',
 })
@@ -17,7 +18,9 @@ export class BaseInputComponent {
   @Input() formGroup!: FormGroup;
   @Input() formInputName = '';
   @Input() errorMessage = '';
-  @Input() type = 'text'
+  @Input() type = 'text';
+  @Input() isTextArea = false;
+  @Input() placeholder = '';
 
   readonly uniqueId = `input-${uuidv4()}`;
 
