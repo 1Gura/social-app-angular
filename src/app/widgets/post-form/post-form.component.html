@@ -1,0 +1,43 @@
+<div class="post-form">
+  <form class="flex flex-column gap-5" [formGroup]="formGroup" (submit)="onSubmitForm()">
+    <app-base-input [errorMessage]="'Поле заголовка поста является обязательным'"
+                    [formGroup]="formGroup"
+                    [formInputName]="'caption'"
+                    [label]="'Caption'"
+                    [isTextArea]="true"
+    ></app-base-input>
+    <app-base-input
+      [formGroup]="formGroup"
+      [formInputName]="'mediaData'"
+      [label]="'Add Photo/Video'"
+    ></app-base-input>
+    <app-base-input [formGroup]="formGroup"
+                    [formInputName]="'location'"
+                    [label]="'Location'"
+    ></app-base-input>
+    <app-base-input [formGroup]="formGroup"
+                    [formInputName]="'tags'"
+                    [label]="'Tags (separated by comma «,»)'"
+                    placeholder="JS, TypeScript, Angular"
+    ></app-base-input>
+    <app-base-input
+      [formGroup]="formGroup"
+      [formInputName]="'altText'"
+      [label]="'Photo/Video Alt Text'"
+    ></app-base-input>
+    <div class="flex justify-content-end align-items-center gap-1">
+      <app-base-button
+        class="w-3"
+        [isSubmit]="true"
+        [buttonLabel]="'Submit'"
+      >
+      </app-base-button>
+      <app-base-button
+        class="w-3"
+        [buttonLabel]="'Cancel'"
+        [buttonColor]="noneColor"
+      >
+      </app-base-button>
+    </div>
+  </form>
+</div>
