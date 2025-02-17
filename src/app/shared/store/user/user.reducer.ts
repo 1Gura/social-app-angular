@@ -19,10 +19,12 @@ export const initialUserState: UserState = {
   user: {
     id: '',
     age: -Infinity,
+    email: '',
     password: '',
     socialMedia: undefined,
     username: '',
-    subscribed: false },
+    subscribed: false,
+  },
   loading: false,
   error: null,
 };

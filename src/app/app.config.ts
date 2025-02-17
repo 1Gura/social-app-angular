@@ -12,6 +12,8 @@ import { provideEffects } from '@ngrx/effects';
 import { authReducer } from './shared/store/auth/auth.reducer';
 import { AuthEffects } from './shared/store/auth/auth.effects';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { postReducer } from './shared/store/post/posts.reducer';
+import { PostEffects } from './shared/store/post/posts.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +31,8 @@ export const appConfig: ApplicationConfig = {
     provideEffects([UserEffects]),
     provideState('auth', authReducer),
     provideEffects([AuthEffects]),
-    provideAnimations()
+    provideState('posts', postReducer),
+    provideEffects([PostEffects]),
+    provideAnimations(),
   ],
 };

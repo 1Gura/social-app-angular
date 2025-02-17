@@ -1,5 +1,5 @@
 <div class="post-form">
-  <form class="flex flex-column gap-5" [formGroup]="formGroup" (submit)="onSubmitForm()">
+  <form *ngIf="formGroup" class="flex flex-column gap-5" [formGroup]="formGroup" (submit)="onSubmitForm()">
     <app-base-input [errorMessage]="'Поле заголовка поста является обязательным'"
                     [formGroup]="formGroup"
                     [formInputName]="'caption'"
