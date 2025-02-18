@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../entities/lib/api/users/users.service';
 import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { selectAccessUserInfo, selectAuthError, selectAuthLoading } from '../../shared/store/auth/auth.selectors';
-import { take } from 'rxjs';
+import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../shared/store/auth/auth.selectors';
+import { Observable, take } from 'rxjs';
 import { loadUserById } from '../../shared/store/user/user.actions';
 import { selectUser } from '../../shared/store/user/user.selectors';
 import { getAuthUserByAccessToken } from '../../shared/store/auth/auth.actions';
+import { PostResponse } from '../../shared/api/user/user.types';
+import { selectAllPosts, selectPostsError, selectPostsLoading } from '../../shared/store/post/post.selectors';
+import { loadPosts } from '../../shared/store/post/posts.actions';
 
 @Component({
   selector: 'app-feed',
@@ -24,22 +27,45 @@ import { getAuthUserByAccessToken } from '../../shared/store/auth/auth.actions';
   styleUrl: './feed.component.scss',
 })
 export class FeedComponent implements OnInit {
-  userByAccessToken$ = this.store.select(selectAccessUserInfo);
+  userByAccessToken$ = this.store.select(selectAuthUser);
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
-  userInfo$ = this.store.select(selectUser)
+  userInfo$ = this.store.select(selectUser);
+
+
+  posts$?: Observable<PostResponse[]>;
+  postsLoading$?: Observable<boolean>;
+  postsError$?: Observable<string | null>;
 
   constructor(private store: Store) {
   }
 
   ngOnInit(): void {
     this.store.dispatch(getAuthUserByAccessToken());
+
+    this.posts$ = this.store.select(selectAllPosts);
+    this.loading$ = this.store.select(selectPostsLoading);
+    this.error$ = this.store.select(selectPostsError);
   }
 
   fetchUser() {
     this.userByAccessToken$.pipe(take(1)).subscribe((userByAccessToken) => {
         if (userByAccessToken) {
-          this.store.dispatch(loadUserById({id: userByAccessToken.userId}));
+          this.store.dispatch(loadUserById({ id: userByAccessToken.id }));
+        }
+      },
+    );
+  }
+
+  getPosts(): void {
+    debugger
+    this.userByAccessToken$.pipe(take(1)).subscribe((userByAccessToken) => {
+        if (userByAccessToken) {
+          // const { userId } = userByAccessToken;
+
+          this.store.dispatch(loadPosts({
+            filters: { tags: [] },
+          })); // Загружаем посты
         }
       },
     );

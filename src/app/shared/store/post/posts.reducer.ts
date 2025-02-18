@@ -31,4 +31,24 @@ export const postReducer = createReducer(
     loading: false,
     error,
   })),
+  // Начало загрузки постов
+  on(PostActions.loadPosts, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Успешная загрузка
+  on(PostActions.loadPostsSuccess, (state, { posts }) => ({
+    ...state,
+    posts,
+    loading: false,
+  })),
+
+  // Ошибка загрузки
+  on(PostActions.loadPostsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 );

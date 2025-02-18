@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CreatePostRequest, PostResponse } from '../../api/user/user.types';
+import { CreatePostRequest, ListPostsRequest, PostResponse } from '../../api/user/user.types';
 
 // Создание поста
 export const createPost = createAction(
@@ -14,5 +14,23 @@ export const createPostSuccess = createAction(
 
 export const createPostFailure = createAction(
   '[Post] Create Post Failure',
+  props<{ error: string }>(),
+);
+
+// Запрос на загрузку постов
+export const loadPosts = createAction(
+  '[Posts] Load Posts',
+  props<{ filters: ListPostsRequest }>(),
+);
+
+// Успешная загрузка постов
+export const loadPostsSuccess = createAction(
+  '[Posts] Load Posts Success',
+  props<{ posts: PostResponse[] }>(),
+);
+
+// Ошибка загрузки постов
+export const loadPostsFailure = createAction(
+  '[Posts] Load Posts Failure',
   props<{ error: string }>(),
 );

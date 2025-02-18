@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreatePostRequest, File, PostResponse } from '../user/user.types';
+import { CreatePostRequest, File, ListPostsRequest, ListPostsResponse, PostResponse } from '../user/user.types';
 import { ENDPOINTS } from '../endpoints';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
-  private readonly API_URL = ENDPOINTS.authEndpoint; // Базовый URL для авторизации
+  private readonly API_URL = ENDPOINTS.postsEndpoint; // Базовый URL для авторизации
 
 
   constructor(private http: HttpClient) {
@@ -17,13 +17,8 @@ export class PostService {
   /**
    * Получение списка постов с возможностью фильтрации по userId, тегам и локации
    */
-  getPosts(userId?: string, tags?: string[], location?: string): Observable<PostResponse[]> {
-    let params = new HttpParams();
-    if (userId) params = params.set('userId', userId);
-    if (tags && tags.length) params = params.set('tags', tags.join(','));
-    if (location) params = params.set('location', location);
-
-    return this.http.get<PostResponse[]>(this.API_URL, { params });
+  getPosts(filters: ListPostsRequest): Observable<ListPostsResponse> {
+    return this.http.post<ListPostsResponse>(`${this.API_URL}/get-list`, filters);
   }
 
   /**

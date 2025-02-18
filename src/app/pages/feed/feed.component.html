@@ -8,4 +8,12 @@
   }}
 </div>
 
+@for (post of posts$ | async; track post.id) {
+  <div>
+    {{ post.caption }}
+    {{ post.userId }}
+  </div>
+}
+
 <button (click)="fetchUser()">Обновить</button>
+<button (click)="getPosts()">Получить посты</button>
