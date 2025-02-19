@@ -3,7 +3,7 @@ import { UserService } from '../../entities/lib/api/users/users.service';
 import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../shared/store/auth/auth.selectors';
-import { Observable, take } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { loadUserById } from '../../shared/store/user/user.actions';
 import { selectUser } from '../../shared/store/user/user.selectors';
 import { getAuthUserByAccessToken } from '../../shared/store/auth/auth.actions';
@@ -41,11 +41,22 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userByAccessToken$.pipe(
+      tap((userInfoResponse) => {
+        if (userInfoResponse) {
+          this.store.dispatch(loadPosts({
+            filters: { tags: [] },
+          })); // Загружаем посты
+        }
+      })).subscribe();
+
     this.store.dispatch(getAuthUserByAccessToken());
 
     this.posts$ = this.store.select(selectAllPosts);
     this.loading$ = this.store.select(selectPostsLoading);
     this.error$ = this.store.select(selectPostsError);
+
+
   }
 
   fetchUser() {
@@ -58,7 +69,6 @@ export class FeedComponent implements OnInit {
   }
 
   getPosts(): void {
-    debugger
     this.userByAccessToken$.pipe(take(1)).subscribe((userByAccessToken) => {
         if (userByAccessToken) {
           // const { userId } = userByAccessToken;

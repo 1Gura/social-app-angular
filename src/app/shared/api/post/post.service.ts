@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreatePostRequest, File, ListPostsRequest, ListPostsResponse, PostResponse } from '../user/user.types';
+import { CreatePostRequest, ListPostsRequest, ListPostsResponse, PostResponse } from '../user/user.types';
 import { ENDPOINTS } from '../endpoints';
 
 @Injectable({
@@ -32,21 +32,7 @@ export class PostService {
    * Создание нового поста с загрузкой файлов
    */
   createPost(post: CreatePostRequest): Observable<PostResponse> {
-    const formData = new FormData();
-    formData.append('caption', post.caption);
-    formData.append('location', post.location ?? '');
-    formData.append('altText', post.altText ?? '');
-
-    if (post.userId) formData.append('userId', post.userId);
-    if (post.tags) post.tags.forEach(tag => formData.append('tags', tag));
-
-    if (post.files) {
-      post.files.forEach((file: File) => {
-        formData.append('files', file.fileData, file.filename);
-      });
-    }
-
-    return this.http.post<PostResponse>(this.API_URL, formData);
+    return this.http.post<PostResponse>(this.API_URL, post);
   }
 
   /**

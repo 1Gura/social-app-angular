@@ -8,8 +8,10 @@ import { NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { CreatePostRequest, PostResponse } from '../../shared/api/user/user.types';
 import { createPost } from '../../shared/store/post/posts.actions';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { selectError, selectLoading, selectPosts } from '../../shared/store/post/post.selectors';
+import { selectAuthError, selectAuthLoading, selectAuthUser } from '../../shared/store/auth/auth.selectors';
+import { getAuthUserByAccessToken } from '../../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-post-form',
@@ -37,9 +39,15 @@ export class PostFormComponent implements OnInit {
   loading$?: Observable<boolean>;
   error$?: Observable<string | null>;
 
+  userByAccessToken$ = this.store.select(selectAuthUser);
+  userLoading$ = this.store.select(selectAuthLoading);
+  userError$ = this.store.select(selectAuthError);
+
   public readonly noneColor = ButtonBackgroundColors.none;
 
   ngOnInit(): void {
+    this.store.dispatch(getAuthUserByAccessToken());
+
     this.formGroup = this.fb.group({
       userId: '',
       caption: [
@@ -62,9 +70,19 @@ export class PostFormComponent implements OnInit {
   }
 
   public onSubmitForm(): void {
-    if (this?.formGroup?.value) {
-      const post: CreatePostRequest = this.formGroup.value;
-      this.store.dispatch(createPost({ post }));
-    }
+    // TODO валидацию бахнуть сюда надо
+    this.userByAccessToken$.pipe(take(1)).subscribe(authUserInfo => {
+      if (authUserInfo && this?.formGroup?.value) {
+        const tags = this.prepareTags(this.formGroup.value.tags);
+        const files = this.formGroup.value.files ?? [];
+        const post: CreatePostRequest = { ...this.formGroup.value, tags, files, userId: authUserInfo.id };
+
+        this.store.dispatch(createPost({ post: post }));
+      }
+    });
+  }
+
+  private prepareTags(tagsString: string): string[] {
+    return tagsString.split(',').map((tag) => tag.trim());
   }
 }
