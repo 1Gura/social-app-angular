@@ -10,6 +10,11 @@ export const selectPosts = createSelector(
   (state) => state.posts,
 );
 
+export const selectCreatedPost = createSelector(
+  selectPostState,
+  (state) => state.createdPost,
+);
+
 // Селектор для статуса загрузки
 export const selectLoading = createSelector(
   selectPostState,

@@ -6,12 +6,14 @@ export interface PostState {
   posts: PostResponse[];
   loading: boolean;
   error: string | null;
+  createdPost: PostResponse | null;
 }
 
 const initialState: PostState = {
   posts: [],
   loading: false,
   error: null,
+  createdPost: null,
 };
 
 export const postReducer = createReducer(
@@ -25,6 +27,7 @@ export const postReducer = createReducer(
     ...state,
     posts: [...state.posts, post],
     loading: false,
+    createdPost: post,
   })),
   on(PostActions.createPostFailure, (state, { error }) => ({
     ...state,

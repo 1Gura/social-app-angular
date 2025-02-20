@@ -1,10 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { CreatePostRequest, ListPostsRequest, PostResponse } from '../../api/user/user.types';
+import { UploadFile } from '../../../pages/create-post/files-upload.service';
 
 // Создание поста
 export const createPost = createAction(
   '[Post] Create Post',
-  props<{ post: CreatePostRequest }>(),
+  props<{ post: CreatePostRequest, files: UploadFile[] }>(),
 );
 
 export const createPostSuccess = createAction(

@@ -12,8 +12,8 @@ export class PostEffects {
   createPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.createPost),
-      switchMap(({ post }) =>
-        this.postService.createPost(post).pipe(
+      switchMap(({ post, files }) =>
+        this.postService.createPost(post, files).pipe(
           map((newPost) => PostActions.createPostSuccess({ post: newPost })),
           catchError((error) =>
             of(PostActions.createPostFailure({ error: error.message })),

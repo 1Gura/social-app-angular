@@ -11,12 +11,14 @@
   <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden />
   <app-base-button class="mt-4" [buttonLabel]="'Select from computer'" (click)="fileInput.click()"></app-base-button>
 
-  <div class="image-preview-container mt-4" *ngIf="files.length > 0">
-    <div class="image-preview" *ngFor="let file of files; let i = index">
-      <button class="delete-button" (click)="removeFile(i)">×</button>
-      <img [src]="file.preview" alt="Preview" />
-      <p>{{ file.name }}</p>
-    </div>
+  <div class="image-preview-container mt-4" *ngIf="(files$ | async) as files">
+    @if (files.length) {
+      <div class="image-preview" *ngFor="let file of files; let i = index">
+        <button class="delete-button" (click)="onRemoveFile(i)">×</button>
+        <img [src]="file.preview" alt="Preview" />
+        <p>{{ file.name }}</p>
+      </div>
+    }
   </div>
   <div class="base-input__error-container">
     <small *ngIf="error" id="formname-help">
